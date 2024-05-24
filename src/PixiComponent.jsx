@@ -85,7 +85,8 @@ function PixiComponent(){
         setPuzzle(updatedPuzzle)
         if(initpos.x === null && initpos.y === null){
             if(nearestWord){
-                setInitPos({x: nearestWord.xPos,y: nearestWord.yPos});
+                initpos.x = nearestWord.xPos
+                initpos.y = nearestWord.yPos
             }
         }
         else{
@@ -100,7 +101,8 @@ function PixiComponent(){
             g.lineStyle(4, 0xffd900, 1);
             g.moveTo(initpos.x, initpos.y);
             g.lineTo(word.xPos, word.yPos)
-            setInitPos({x: word.xPos, y: word.yPos})
+            initpos.x = word.xPos
+            initpos.y = word.yPos
         }
 
     },[word])
@@ -110,7 +112,7 @@ function PixiComponent(){
     })
     window.addEventListener('pointerup', ()=>{
         setDrawing(false)
-        setDrawing(true)
+        // setDrawing(true)
     })
 
     return(
