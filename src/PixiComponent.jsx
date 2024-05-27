@@ -7,11 +7,12 @@ import { TextStyle } from 'pixi.js';
 function PixiComponent() {
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    const [word, setWord] = useState(null);
     const [drawing, setDrawing] = useState(false);
-    const initPos = useRef({ x: null, y: null });
     const nearestWord = useRef(null);
-
+    const [movePos, SetMovePos] = useState({x: null, y: null});
+    const [startPos, setStartPos] = useState({ x: null, y: null });
+    const [lines, setLines] = useState([])
+    
     const handleResize = () => {
         setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
@@ -59,6 +60,9 @@ function PixiComponent() {
 
     useEffect(() => {
         const handlePointerMove = (e) => {
+            // if(!drawing){
+            //     return;
+            // }
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -67,6 +71,9 @@ function PixiComponent() {
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
+                if(distance< 50 && drawing){
+                    console.log(word.text)
+                }
                 return {
                     ...word,
                     color: distance <= 50 ? 'green' : 'black',
@@ -75,29 +82,32 @@ function PixiComponent() {
 
             nearestWord.current = updatedPuzzle.find((word) => word.color === 'green');
             setPuzzle(updatedPuzzle);
+            SetMovePos({x: e.clientX, y: e.clientY})
         };
 
         window.addEventListener('pointermove', handlePointerMove);
         return () => {
             window.removeEventListener('pointermove', handlePointerMove);
         };
-    }, [puzzle]);
+    }, [puzzle, drawing]);
 
     useEffect(() => {
-        const handlePointerDown = () => {
-            if (initPos.current.x === null && initPos.current.y === null) {
-                if (nearestWord.current) {
-                    initPos.current.x = nearestWord.current.xPos;
-                    initPos.current.y = nearestWord.current.yPos;
-                }
-            } else {
-                setWord(nearestWord.current || null);
-                setDrawing(true);
+        const handlePointerDown = (e) => {
+            setDrawing(true)
+            if(lines.length === 0){
+                setStartPos({ x: e.clientX, y: e.clientY });
+            }
+            else{
+                setStartPos(lines[lines.length-1].end);
             }
         };
 
         const handlePointerUp = () => {
             setDrawing(false);
+            setLines((line)=>[
+                ...line,{start: startPos, end: movePos}
+            ])
+            setStartPos(movePos)
         };
 
         window.addEventListener('pointerdown', handlePointerDown);
@@ -107,17 +117,21 @@ function PixiComponent() {
             window.removeEventListener('pointerdown', handlePointerDown);
             window.removeEventListener('pointerup', handlePointerUp);
         };
-    }, []);
+    }, [startPos, movePos, lines]);
 
     const draw = useCallback((g) => {
-        if (word && drawing) {
-            g.lineStyle(4, 0xffd900, 1);
-            g.moveTo(initPos.current.x, initPos.current.y);
-            g.lineTo(nearestWord.current.xPos, nearestWord.current.yPos);
-            initPos.current.x = nearestWord.current.xPos;
-            initPos.current.y = nearestWord.current.yPos;
+        g.clear()
+        g.lineStyle(3, 0xffd900);
+        lines.forEach((line) =>{
+        g.moveTo(line.start.x, line.start.y)
+        g.lineTo(line.end.x, line.end.y)
+        })          //For previous lines (if any)
+        if (drawing && movePos.x !== null && movePos.y !== null) {
+
+            g.moveTo(startPos.x, startPos.y);
+            g.lineTo(movePos.x, movePos.y);
         }
-    }, [word, drawing]);
+    }, [drawing, startPos, movePos, lines]);
 
     return (
         <Stage x={0} y={0} options={{ backgroundColor: 0x808080 }} height={dimensions.height} width={dimensions.width}>
