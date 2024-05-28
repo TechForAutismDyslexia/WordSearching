@@ -12,6 +12,7 @@ function PixiComponent() {
     const [movePos, SetMovePos] = useState({x: null, y: null});
     const [startPos, setStartPos] = useState({ x: null, y: null });
     const [lines, setLines] = useState([])
+    const [letter, setLetter] = useState(null)
     
     const handleResize = () => {
         setDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -73,6 +74,7 @@ function PixiComponent() {
                 );
                 if(distance< 50 && drawing){
                     console.log(word.text)
+                    setLetter(word.text);
                 }
                 return {
                     ...word,
@@ -105,8 +107,9 @@ function PixiComponent() {
         const handlePointerUp = () => {
             setDrawing(false);
             setLines((line)=>[
-                ...line,{start: startPos, end: movePos}
+                ...line,{start: startPos, end: movePos, texttt: letter}
             ])
+            // console.log(lines[0])
             setStartPos(movePos)
         };
 
@@ -125,6 +128,7 @@ function PixiComponent() {
         lines.forEach((line) =>{
         g.moveTo(line.start.x, line.start.y)
         g.lineTo(line.end.x, line.end.y)
+        console.log(line)
         })          //For previous lines (if any)
         if (drawing && movePos.x !== null && movePos.y !== null) {
 
