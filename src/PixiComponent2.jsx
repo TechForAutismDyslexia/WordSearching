@@ -1,18 +1,14 @@
-import { Graphics, Stage, Text } from '@pixi/react';
+import {Stage, Text } from '@pixi/react';
 import './App.css';
 import '@pixi/events';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 
-function PixiComponent() {
+function PixiComponent2() {
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    const [drawing, setDrawing] = useState(false);
-    const nearestWord = useRef(null);
-    const [movePos, SetMovePos] = useState({x: null, y: null});
-    const [startPos, setStartPos] = useState({ x: null, y: null });
-    const [lines, setLines] = useState([])
-    const [letter, setLetter] = useState(null)
+
+    
     
     const handleResize = () => {
         setDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -60,10 +56,7 @@ function PixiComponent() {
     }, [dimensions]);
 
     useEffect(() => {
-        const handlePointerMove = (e) => {
-            // if(!drawing){
-            //     return;
-            // }
+        const handlePointerDown = (e) => {
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -72,76 +65,26 @@ function PixiComponent() {
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
-                if(distance< 50 && drawing){
+                if(distance< 50){
                     console.log(word.text)
-                    setLetter(word.text);
                 }
-                // if(drawing){
-                //     return {
-                //         ...word,
-                //         color: 'green'
-                //     }
-                // }
-                return {
-                    ...word,
-                    color: distance <= 50 ? 'green':'black',
-                };
-            });
-
-            nearestWord.current = updatedPuzzle.find((word) => word.color === 'green');
-            setPuzzle(updatedPuzzle);
-            SetMovePos({x: e.clientX, y: e.clientY})
-        };
-
-        window.addEventListener('pointermove', handlePointerMove);
-        return () => {
-            window.removeEventListener('pointermove', handlePointerMove);
-        };
-    }, [puzzle, drawing]);
-
-    useEffect(() => {
-        const handlePointerDown = (e) => {
-            setDrawing(true)
-            if(lines.length === 0){
-                setStartPos({ x: e.clientX, y: e.clientY });
+                if(distance <= 50){
+                    return {
+                        ...word,
+                        color:'green'
+                    };
             }
-            else{
-                setStartPos(lines[lines.length-1].end);
-            }
-        };
+            return word;
 
-        const handlePointerUp = () => {
-            setDrawing(false);
-            setLines((line)=>[
-                ...line,{start: startPos, end: movePos, texttt: letter}
-            ])
-            // console.log(lines[0])
-            setStartPos(movePos)
+        });
+        setPuzzle(updatedPuzzle)
         };
 
         window.addEventListener('pointerdown', handlePointerDown);
-        window.addEventListener('pointerup', handlePointerUp);
-
         return () => {
             window.removeEventListener('pointerdown', handlePointerDown);
-            window.removeEventListener('pointerup', handlePointerUp);
         };
-    }, [startPos, movePos, lines]);
-
-    const draw = useCallback((g) => {
-        g.clear()
-        g.lineStyle(3, 0xffd900);
-        lines.forEach((line) =>{
-        g.moveTo(line.start.x, line.start.y)
-        g.lineTo(line.end.x, line.end.y)
-        console.log(line)
-        })          //For previous lines (if any)
-        if (drawing && movePos.x !== null && movePos.y !== null) {
-
-            g.moveTo(startPos.x, startPos.y);
-            g.lineTo(movePos.x, movePos.y);
-        }
-    }, [drawing, startPos, movePos, lines]);
+    }, [puzzle]);
 
     return (
         <Stage x={0} y={0} options={{ backgroundColor: 0x808080 }} height={dimensions.height} width={dimensions.width}>
@@ -156,9 +99,9 @@ function PixiComponent() {
                     })}
                 />
             ))}
-            <Graphics draw={draw} />
+            {/* <Graphics draw={draw} />  */}
         </Stage>
     );
 }
 
-export default PixiComponent;
+export default PixiComponent2;
