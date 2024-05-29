@@ -57,6 +57,44 @@ function PixiComponent2() {
         setPuzzle(newPuzzle);
     }, [dimensions]);
 
+
+    useEffect(() => {
+        const handlePointerMove = (e) => {
+            // if(!drawing){
+            //     return;
+            // }
+            const updatedPuzzle = puzzle.map((word) => {
+                const pointerPosition_x = e.clientX;
+                const pointerPosition_y = e.clientY;
+                let color = word.color;
+                console.log("CCColor: "+color)
+                const letterPosition = { x: word.xPos, y: word.yPos };
+                const distance = Math.sqrt(
+                    Math.pow(pointerPosition_x - letterPosition.x, 2) +
+                    Math.pow(pointerPosition_y - letterPosition.y, 2)
+                );
+                if(distance< 50){
+                    console.log(word.text)
+                    // setLetter(word.text);
+                }
+                return {
+                    ...word,
+                    color: distance <= 50 ? 'green':color,
+                };
+            });
+
+            // nearestWord.current = updatedPuzzle.find((word) => word.color === 'green');
+            setPuzzle(updatedPuzzle);
+            // SetMovePos({x: e.clientX, y: e.clientY})
+        };
+
+        window.addEventListener('pointermove', handlePointerMove);
+        return () => {
+            window.removeEventListener('pointermove', handlePointerMove);
+        };
+    }, [puzzle]);
+
+
     useEffect(() => {
         const handlePointerDown = (e) => {
             const updatedPuzzle = puzzle.map((word) => {
