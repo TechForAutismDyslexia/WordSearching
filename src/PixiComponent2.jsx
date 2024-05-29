@@ -7,6 +7,8 @@ import { TextStyle } from 'pixi.js';
 function PixiComponent2() {
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
+    let completedWord = ["ant", "tan", "nib", "bat"];
+    const [selectedWord, setSelectedWord] = useState("")
 
     
     
@@ -67,6 +69,8 @@ function PixiComponent2() {
                 );
                 if(distance< 50){
                     console.log(word.text)
+                        setSelectedWord(prev => prev + word.text)
+                        // console.log("Selected Word: "+selectedWord)
                 }
                 if(distance <= 50){
                     return {
@@ -84,7 +88,16 @@ function PixiComponent2() {
         return () => {
             window.removeEventListener('pointerdown', handlePointerDown);
         };
-    }, [puzzle]);
+    }, [puzzle, selectedWord]);
+
+    useEffect(()=>{
+        for(let i = 0;i<completedWord.length;i++){
+            if(completedWord[i] === selectedWord){
+                alert("Congrats!!You have won")
+                setSelectedWord("")
+            }
+        }
+    },[selectedWord])
 
     return (
         <Stage x={0} y={0} options={{ backgroundColor: 0x808080 }} height={dimensions.height} width={dimensions.width}>
@@ -100,6 +113,15 @@ function PixiComponent2() {
                 />
             ))}
             {/* <Graphics draw={draw} />  */}
+            <Text
+                text={`Selected Word: ${selectedWord}`}
+                x={50}
+                y={50}
+                style={new TextStyle({
+                    fill: 'white',
+                    fontSize: 24,
+                })}
+            />
         </Stage>
     );
 }
