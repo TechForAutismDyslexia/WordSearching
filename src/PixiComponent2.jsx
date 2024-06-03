@@ -121,9 +121,9 @@ function PixiComponent2() {
         }
         };
 
-        window.addEventListener('pointermove', handlePointerMove);
+        window.addEventListener('handlemove', handlePointerMove);
         return () => {
-            window.removeEventListener('pointermove', handlePointerMove);
+            window.removeEventListener('handlemove', handlePointerMove);
         };
     }, [puzzle, drawing, indices]);
 
@@ -177,9 +177,7 @@ function PixiComponent2() {
             else {
                 setDrawing(false);
                 // alert("Congrats!! You have found a word");
-                if(!completedWords.filter(selectedWord)){
                 setCompletedWords(completedWords + selectedWord+"\t\t");
-                }
                 setSelectedWord("");
                 setIndices([])
                 for(let l=0;l<indices.length;l++){
@@ -194,16 +192,16 @@ function PixiComponent2() {
             }
         };
 
-        window.addEventListener('pointerdown', handlePointerDown);
-        window.addEventListener('pointerup', handlePointerUp);
+        window.addEventListener('handledown', handlePointerDown);
+        window.addEventListener('handleup', handlePointerUp);
         return () => {
-            window.removeEventListener('pointerdown', handlePointerDown);
-            window.removeEventListener('pointerup', handlePointerUp);
+            window.removeEventListener('handledown', handlePointerDown);
+            window.removeEventListener('handleup', handlePointerUp);
         };
     }, [puzzle, selectedWord, indices, completedWord, completedWords]);
 
     return (
-        <Stage x={0} y={0} options={{ backgroundColor: '#AF8F6F' }} height={dimensions.height} width={dimensions.width}>
+        <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width}>
             <Container name='textArea'>
             {/* <Graphics
                     draw={g => {
