@@ -1,4 +1,4 @@
-import {Container, Stage, Text, Graphics } from '@pixi/react';
+import {Container, Stage, Text } from '@pixi/react';
 import './App.css';
 import '@pixi/events';
 import { useEffect, useMemo, useState } from 'react';
@@ -203,14 +203,14 @@ function PixiComponent2() {
     return (
         <Stage x={0} y={0} options={{ backgroundColor: '#AF8F6F' }} height={dimensions.height} width={dimensions.width}>
             <Container name='textArea'>
-            <Graphics
+            {/* <Graphics
                     draw={g => {
                         g.clear();
                         g.beginFill('#bd9');  // Background color in hex
                         g.drawRect(puzzle[0].xPos-20, puzzle[0].yPos-20, puzzle[23].xPos, puzzle[23].yPos-120);
                         g.endFill();
                     }}
-                />
+                /> */}
             {puzzle.map((word) => (
                 <Text
                     key={word.index}
