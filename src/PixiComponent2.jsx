@@ -177,7 +177,9 @@ function PixiComponent2() {
             else {
                 setDrawing(false);
                 // alert("Congrats!! You have found a word");
+                if(!completedWords.filter(selectedWord)){
                 setCompletedWords(completedWords + selectedWord+"\t\t");
+                }
                 setSelectedWord("");
                 setIndices([])
                 for(let l=0;l<indices.length;l++){
