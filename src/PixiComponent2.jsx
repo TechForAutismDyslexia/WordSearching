@@ -1,14 +1,23 @@
 import {Stage, Text } from '@pixi/react';
 import './App.css';
 import '@pixi/events';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 
 function PixiComponent2() {
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = ["ant", "tan", "nib", "bat"];
+    let completedWord = useMemo(()=>["ant", "tan", "nib", "bat"], []);
     const [selectedWord, setSelectedWord] = useState("")
+    const [drawing, setDrawing] = useState(false)
+    const [indices, setIndices] = useState([])
+    const [givenWords, setGivenWords] = useState("");
+    const [completedWords, setCompletedWords] = useState([])
+    // const [lines, setLines] = useState([])
+
+    useEffect(()=>{
+        setGivenWords(completedWord.join("\t\t"))
+    },[])
 
     
     
@@ -52,6 +61,8 @@ function PixiComponent2() {
                 yPos,
                 color: 'black',
                 index: ind,
+                selected: false,
+                initColor: 'black'
             });
         }
         setPuzzle(newPuzzle);
@@ -60,9 +71,7 @@ function PixiComponent2() {
 
     useEffect(() => {
         const handlePointerMove = (e) => {
-            // if(!drawing){
-            //     return;
-            // }
+            if(drawing){
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -72,31 +81,56 @@ function PixiComponent2() {
                 const distance = Math.sqrt(
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
-                );
-                if(distance< 50){
+                )
+                if(distance< 40 && word.selected === false){
                     console.log(word.text)
-                    // setLetter(word.text);
+                    setSelectedWord(prev => prev + word.text)
+                    setIndices([...indices, word.index])
+                    word.selected = true
+                    // word.initColor = 'green'
                 }
                 return {
                     ...word,
-                    color: distance <= 50 ? 'green':color,
+                    color: distance <= 40 ? 'green':color,
                 };
             });
 
-            // nearestWord.current = updatedPuzzle.find((word) => word.color === 'green');
             setPuzzle(updatedPuzzle);
-            // SetMovePos({x: e.clientX, y: e.clientY})
+        }
+        else{
+            const updatedPuzzle = puzzle.map((word) => {
+                const pointerPosition_x = e.clientX;
+                const pointerPosition_y = e.clientY;
+                let color = word.color;
+                console.log("CCColor: "+color)
+                const letterPosition = { x: word.xPos, y: word.yPos };
+                const distance = Math.sqrt(
+                    Math.pow(pointerPosition_x - letterPosition.x, 2) +
+                    Math.pow(pointerPosition_y - letterPosition.y, 2)
+                )
+                if(distance< 40){
+                    console.log(word.text)
+                }
+                return {
+                    ...word,
+                    color: distance <= 40 ? 'green':word.initColor,
+                };
+            });
+
+            setPuzzle(updatedPuzzle);
+        }
         };
 
         window.addEventListener('pointermove', handlePointerMove);
         return () => {
             window.removeEventListener('pointermove', handlePointerMove);
         };
-    }, [puzzle]);
+    }, [puzzle, drawing, indices]);
 
 
     useEffect(() => {
         const handlePointerDown = (e) => {
+            setDrawing(true)
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -105,12 +139,13 @@ function PixiComponent2() {
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
-                if(distance< 50){
+                if(distance< 40){
                     console.log(word.text)
                         setSelectedWord(prev => prev + word.text)
-                        // console.log("Selected Word: "+selectedWord)
+                        setIndices([...indices, word.index])
+                        word.selected = true
                 }
-                if(distance <= 50){
+                if(distance <= 40){
                     return {
                         ...word,
                         color:'green'
@@ -122,20 +157,48 @@ function PixiComponent2() {
         setPuzzle(updatedPuzzle)
         };
 
+        const handlePointerUp = () => {
+            setDrawing(false);
+            console.log(indices)
+            if (!completedWord.includes(selectedWord)) {
+                for(let l=0;l<indices.length;l++){
+                    for(let k=0;k<puzzle.length;k++){
+                    if(indices[l] === puzzle[k].index){
+                        puzzle[k].color="red"
+                        puzzle[k].selected = false
+                        setPuzzle(puzzle)
+                    }
+                }
+                }
+                setSelectedWord("")
+                setDrawing(false);
+                setIndices([])
+            } 
+            else {
+                setDrawing(false);
+                // alert("Congrats!! You have found a word");
+                setCompletedWords(completedWords + selectedWord+"\t\t");
+                setSelectedWord("");
+                setIndices([])
+                for(let l=0;l<indices.length;l++){
+                    for(let k=0;k<puzzle.length;k++){
+                    if(indices[l] === puzzle[k].index){
+                        puzzle[k].initColor = 'green'
+                        // puzzle[k].selected = false
+                        setPuzzle(puzzle)
+                    }
+                }
+                }
+            }
+        };
+
         window.addEventListener('pointerdown', handlePointerDown);
+        window.addEventListener('pointerup', handlePointerUp);
         return () => {
             window.removeEventListener('pointerdown', handlePointerDown);
+            window.removeEventListener('pointerup', handlePointerUp);
         };
-    }, [puzzle, selectedWord]);
-
-    useEffect(()=>{
-        for(let i = 0;i<completedWord.length;i++){
-            if(completedWord[i] === selectedWord){
-                alert("Congrats!!You have won")
-                setSelectedWord("")
-            }
-        }
-    },[selectedWord])
+    }, [puzzle, selectedWord, indices, completedWord, completedWords]);
 
     return (
         <Stage x={0} y={0} options={{ backgroundColor: 0x808080 }} height={dimensions.height} width={dimensions.width}>
@@ -155,6 +218,25 @@ function PixiComponent2() {
                 text={`Selected Word: ${selectedWord}`}
                 x={50}
                 y={50}
+                style={new TextStyle({
+                    fill: 'white',
+                    fontSize: 24,
+                })}
+            />
+
+                <Text
+                text={`Given Words: ${givenWords}`}
+                x={500}
+                y={600}
+                style={new TextStyle({
+                    fill: 'white',
+                    fontSize: 24,
+                })}
+            />
+                <Text
+                text={`Completed Words: ${completedWords}`}
+                x={500}
+                y={650}
                 style={new TextStyle({
                     fill: 'white',
                     fontSize: 24,
