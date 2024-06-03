@@ -191,12 +191,19 @@ function PixiComponent2() {
                 }
             }
         };
+        const handleTouchMove = (e) => {
+            e.preventDefault(); // Prevent default touchmove behavior
+            // Handle touch move logic...
+        };
 
         window.addEventListener('pointerdown', handlePointerDown);
         window.addEventListener('pointerup', handlePointerUp);
+        window.addEventListener('touchmove', handleTouchMove, { passive: false });
+        
         return () => {
             window.removeEventListener('pointerdown', handlePointerDown);
             window.removeEventListener('pointerup', handlePointerUp);
+            window.removeEventListener('touchmove', handleTouchMove);
         };
     }, [puzzle, selectedWord, indices, completedWord, completedWords]);
 
