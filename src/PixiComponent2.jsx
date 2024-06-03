@@ -1,4 +1,4 @@
-import {Stage, Text } from '@pixi/react';
+import {Container, Stage, Text, Graphics } from '@pixi/react';
 import './App.css';
 import '@pixi/events';
 import { useEffect, useMemo, useState } from 'react';
@@ -164,7 +164,7 @@ function PixiComponent2() {
                 for(let l=0;l<indices.length;l++){
                     for(let k=0;k<puzzle.length;k++){
                     if(indices[l] === puzzle[k].index){
-                        puzzle[k].color="red"
+                        puzzle[k].color="black"
                         puzzle[k].selected = false
                         setPuzzle(puzzle)
                     }
@@ -201,7 +201,16 @@ function PixiComponent2() {
     }, [puzzle, selectedWord, indices, completedWord, completedWords]);
 
     return (
-        <Stage x={0} y={0} options={{ backgroundColor: 0x808080 }} height={dimensions.height} width={dimensions.width}>
+        <Stage x={0} y={0} options={{ backgroundColor: '#AF8F6F' }} height={dimensions.height} width={dimensions.width}>
+            <Container name='textArea'>
+            <Graphics
+                    draw={g => {
+                        g.clear();
+                        g.beginFill('#bd9');  // Background color in hex
+                        g.drawRect(puzzle[0].xPos-20, puzzle[0].yPos-20, puzzle[23].xPos, puzzle[23].yPos-120);
+                        g.endFill();
+                    }}
+                />
             {puzzle.map((word) => (
                 <Text
                     key={word.index}
@@ -213,6 +222,7 @@ function PixiComponent2() {
                     })}
                 />
             ))}
+            </Container>
             {/* <Graphics draw={draw} />  */}
             <Text
                 text={`Selected Word: ${selectedWord}`}

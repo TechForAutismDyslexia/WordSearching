@@ -1,6 +1,10 @@
  *{
 overflow: hidden;
-background-color: grey;
+background-color: #AF8F6F;
+}
+
+.textArea{
+  background-color: #F8F4E1;
 }
 
 /*
