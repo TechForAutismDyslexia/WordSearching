@@ -121,9 +121,9 @@ function PixiComponent2() {
         }
         };
 
-        window.addEventListener('handlemove', handlePointerMove);
+        window.addEventListener('pointermove', handlePointerMove);
         return () => {
-            window.removeEventListener('handlemove', handlePointerMove);
+            window.removeEventListener('pointermove', handlePointerMove);
         };
     }, [puzzle, drawing, indices]);
 
@@ -192,11 +192,11 @@ function PixiComponent2() {
             }
         };
 
-        window.addEventListener('handledown', handlePointerDown);
-        window.addEventListener('handleup', handlePointerUp);
+        window.addEventListener('pointerdown', handlePointerDown);
+        window.addEventListener('pointerup', handlePointerUp);
         return () => {
-            window.removeEventListener('handledown', handlePointerDown);
-            window.removeEventListener('handleup', handlePointerUp);
+            window.removeEventListener('pointerdown', handlePointerDown);
+            window.removeEventListener('pointerup', handlePointerUp);
         };
     }, [puzzle, selectedWord, indices, completedWord, completedWords]);
 
