@@ -1,7 +1,7 @@
-import {Container, Stage, Text } from '@pixi/react';
+import {Container, Stage, Text, Graphics } from '@pixi/react';
 import './App.css';
 import '@pixi/events';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 
 function PixiComponent2() {
@@ -13,11 +13,35 @@ function PixiComponent2() {
     const [indices, setIndices] = useState([])
     const [givenWords, setGivenWords] = useState("");
     const [completedWords, setCompletedWords] = useState([])
-    // const [lines, setLines] = useState([])
+    const [lineClear, setLineClear] = useState(false)
+    const [lines, setLines] = useState([])
 
     useEffect(()=>{
         setGivenWords(completedWord.join("\t\t"))
     },[])
+
+    const draw = useCallback((g)=>{
+        if(indices.length >=2 && !lineClear){
+        // g.clear()
+        g.lineStyle(3, 0xffd900);
+        if(lines.length > 0){
+        lines.forEach(line=>{
+            g.moveTo(line.start.x, line.start.y)
+            g.lineTo(line.end.x, line.end.y)
+        })
+    }
+        g.moveTo(puzzle[indices[0]].xPos, puzzle[indices[0]].yPos);
+        g.lineTo(puzzle[indices[indices.length - 1]].xPos, puzzle[indices[indices.length - 1]].yPos);
+        console.log("length: "+lines.length)
+        // lines.length.start.x = puzzle[indices[indices.length - 1]].xPos
+        // lines.length.start.y = puzzle[indices[indices.length - 1]].yPos
+        g.endFill();
+        }
+        if(lineClear){
+            g.clear();
+            setLineClear(false)
+        }
+    },[indices, puzzle, lineClear])
 
     
     
@@ -120,15 +144,6 @@ function PixiComponent2() {
             setPuzzle(updatedPuzzle);
         }
         };
-
-        window.addEventListener('pointermove', handlePointerMove);
-        return () => {
-            window.removeEventListener('pointermove', handlePointerMove);
-        };
-    }, [puzzle, drawing, indices]);
-
-
-    useEffect(() => {
         const handlePointerDown = (e) => {
             setDrawing(true)
             const updatedPuzzle = puzzle.map((word) => {
@@ -173,8 +188,9 @@ function PixiComponent2() {
                 setSelectedWord("")
                 setDrawing(false);
                 setIndices([])
+                setLineClear(true)
             } 
-            else {
+            else if(!completedWords.includes(selectedWord)){
                 setDrawing(false);
                 // alert("Congrats!! You have found a word");
                 setCompletedWords(completedWords + selectedWord+"\t\t");
@@ -190,34 +206,26 @@ function PixiComponent2() {
                 }
                 }
             }
-        };
-        const handleTouchMove = (e) => {
-            e.preventDefault(); // Prevent default touchmove behavior
-            // Handle touch move logic...
+            else{
+                alert("Already found the word "+selectedWord+"!!")
+                setSelectedWord("")
+            }
         };
 
         window.addEventListener('pointerdown', handlePointerDown);
-        window.addEventListener('pointerup', handlePointerUp);
-        window.addEventListener('touchmove', handleTouchMove, { passive: false });
-        
+        window.addEventListener('pointerup', handlePointerUp); 
+        window.addEventListener('pointermove', handlePointerMove);
+       
         return () => {
             window.removeEventListener('pointerdown', handlePointerDown);
             window.removeEventListener('pointerup', handlePointerUp);
-            window.removeEventListener('touchmove', handleTouchMove);
+            window.removeEventListener('pointermove', handlePointerMove);
         };
-    }, [puzzle, selectedWord, indices, completedWord, completedWords]);
+    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing]);
 
     return (
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width}>
             <Container name='textArea'>
-            {/* <Graphics
-                    draw={g => {
-                        g.clear();
-                        g.beginFill('#bd9');  // Background color in hex
-                        g.drawRect(puzzle[0].xPos-20, puzzle[0].yPos-20, puzzle[23].xPos, puzzle[23].yPos-120);
-                        g.endFill();
-                    }}
-                /> */}
             {puzzle.map((word) => (
                 <Text
                     key={word.index}
@@ -229,8 +237,8 @@ function PixiComponent2() {
                     })}
                 />
             ))}
+            <Graphics draw={draw} /> 
             </Container>
-            {/* <Graphics draw={draw} />  */}
             <Text
                 text={`Selected Word: ${selectedWord}`}
                 x={50}
