@@ -24,13 +24,13 @@ function PixiComponent2() {
         if(indices.length >=2 && !lineClear){
         // g.clear()
         g.lineStyle(3, 0xffd900);
-        if(lines.length > 0){
+        if(lines.length > 4){
         lines.forEach(line=>{
             g.moveTo(line.start.x, line.start.y)
             g.lineTo(line.end.x, line.end.y)
         })
     }
-        g.moveTo(puzzle[indices[0]].xPos, puzzle[indices[0]].yPos);
+        g.moveTo(puzzle[indices[indices.length - 2]].xPos, puzzle[indices[indices.length-2]].yPos);
         g.lineTo(puzzle[indices[indices.length - 1]].xPos, puzzle[indices[indices.length - 1]].yPos);
         console.log("length: "+lines.length)
         // lines.length.start.x = puzzle[indices[indices.length - 1]].xPos
