@@ -18,30 +18,30 @@ function PixiComponent2() {
 
     useEffect(()=>{
         setGivenWords(completedWord.join("\t\t"))
-    },[])
+    },[completedWord])
 
     const draw = useCallback((g)=>{
         if(indices.length >=2 && !lineClear){
-        // g.clear()
+        g.clear()
         g.lineStyle(3, 0xffd900);
-        if(lines.length > 4){
+        if(lines.length > 0){
         lines.forEach(line=>{
-            g.moveTo(line.start.x, line.start.y)
-            g.lineTo(line.end.x, line.end.y)
+            g.moveTo(line.start_x, line.start_y)
+            g.lineTo(line.end_x, line.end_y)
+            console.log("Length of line: "+lines.length);
         })
     }
         g.moveTo(puzzle[indices[indices.length - 2]].xPos, puzzle[indices[indices.length-2]].yPos);
         g.lineTo(puzzle[indices[indices.length - 1]].xPos, puzzle[indices[indices.length - 1]].yPos);
+        
         console.log("length: "+lines.length)
-        // lines.length.start.x = puzzle[indices[indices.length - 1]].xPos
-        // lines.length.start.y = puzzle[indices[indices.length - 1]].yPos
         g.endFill();
         }
         if(lineClear){
             g.clear();
             setLineClear(false)
         }
-    },[indices, puzzle, lineClear])
+    },[indices, puzzle, lineClear, lines])
 
     
     
@@ -100,7 +100,7 @@ function PixiComponent2() {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
                 let color = word.color;
-                console.log("CCColor: "+color)
+                // console.log("CCColor: "+color)
                 const letterPosition = { x: word.xPos, y: word.yPos };
                 const distance = Math.sqrt(
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
@@ -111,6 +111,11 @@ function PixiComponent2() {
                     setSelectedWord(prev => prev + word.text)
                     setIndices([...indices, word.index])
                     word.selected = true
+                    if(indices.length >= 2){
+                    setLines((line)=>[
+                        ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos}
+                    ])
+                }
                     // word.initColor = 'green'
                 }
                 return {
@@ -194,13 +199,18 @@ function PixiComponent2() {
                 setDrawing(false);
                 // alert("Congrats!! You have found a word");
                 setCompletedWords(completedWords + selectedWord+"\t\t");
+                console.log("completed:"+completedWords.length)
+                if(indices.length >= 2){
+                    setLines((line)=>[
+                        ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos}
+                    ])
+                }
                 setSelectedWord("");
                 setIndices([])
                 for(let l=0;l<indices.length;l++){
                     for(let k=0;k<puzzle.length;k++){
                     if(indices[l] === puzzle[k].index){
                         puzzle[k].initColor = 'green'
-                        // puzzle[k].selected = false
                         setPuzzle(puzzle)
                     }
                 }
@@ -222,6 +232,12 @@ function PixiComponent2() {
             window.removeEventListener('pointermove', handlePointerMove);
         };
     }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing]);
+
+    useEffect(()=>{
+        if(completedWords.length === completedWord.length-2){
+            alert("You have found out all words")
+        }
+    },[completedWords, completedWord])
 
     return (
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width}>
