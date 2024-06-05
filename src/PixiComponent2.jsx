@@ -198,8 +198,8 @@ function PixiComponent2() {
             else if(!completedWords.includes(selectedWord)){
                 setDrawing(false);
                 // alert("Congrats!! You have found a word");
-                setCompletedWords(completedWords + selectedWord+"\t\t");
-                console.log("completed:"+completedWords.length)
+                setCompletedWords([...completedWords,selectedWord]);
+                console.log("completed:"+completedWords[0])
                 if(indices.length >= 2){
                     setLines((line)=>[
                         ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos}
@@ -234,7 +234,7 @@ function PixiComponent2() {
     }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing]);
 
     useEffect(()=>{
-        if(completedWords.length === completedWord.length-2){
+        if(completedWords.length === completedWord.length){
             alert("You have found out all words")
         }
     },[completedWords, completedWord])
