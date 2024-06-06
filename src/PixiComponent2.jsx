@@ -3,6 +3,8 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
+// import { clear } from 'console';
+// import confetti from 'canvas-confetti';
 
 function PixiComponent2() {
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
@@ -16,6 +18,7 @@ function PixiComponent2() {
     const [lineClear, setLineClear] = useState(false)
     const [lines, setLines] = useState([])
 
+
     useEffect(()=>{
         setGivenWords(completedWord.join("\t\t"))
     },[completedWord])
@@ -26,8 +29,13 @@ function PixiComponent2() {
         g.lineStyle(3, 0xffd900);
         if(lines.length > 0){
         lines.forEach(line=>{
-            g.moveTo(line.start_x, line.start_y)
-            g.lineTo(line.end_x, line.end_y)
+            if(line.clear === true){
+                g.clear;
+            }
+            else{
+                g.moveTo(line.start_x, line.start_y)
+                g.lineTo(line.end_x, line.end_y)
+            }
             console.log("Length of line: "+lines.length);
         })
     }
@@ -38,7 +46,11 @@ function PixiComponent2() {
         g.endFill();
         }
         if(lineClear){
-            g.clear();
+            lines.forEach(line=>{
+                if(line.clear === "none"){
+                    g.clear;
+                }
+            })
             setLineClear(false)
         }
     },[indices, puzzle, lineClear, lines])
@@ -47,6 +59,7 @@ function PixiComponent2() {
     
     const handleResize = () => {
         setDimensions({ width: window.innerWidth, height: window.innerHeight });
+        setLines([])
     };
 
     useEffect(() => {
@@ -113,7 +126,7 @@ function PixiComponent2() {
                     word.selected = true
                     if(indices.length >= 2){
                     setLines((line)=>[
-                        ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos}
+                        ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos, clear: "none"}
                     ])
                 }
                     // word.initColor = 'green'
@@ -187,6 +200,11 @@ function PixiComponent2() {
                         puzzle[k].color="black"
                         puzzle[k].selected = false
                         setPuzzle(puzzle)
+                        lines.forEach(line=>{
+                            if(line.clear === "none"){
+                                line.clear = true
+                            }
+                        })
                     }
                 }
                 }
@@ -212,6 +230,11 @@ function PixiComponent2() {
                     if(indices[l] === puzzle[k].index){
                         puzzle[k].initColor = 'green'
                         setPuzzle(puzzle)
+                        lines.forEach(line=>{
+                            if(line.clear === "none"){
+                                line.clear = false;
+                            }
+                        })
                     }
                 }
                 }
@@ -231,21 +254,22 @@ function PixiComponent2() {
             window.removeEventListener('pointerup', handlePointerUp);
             window.removeEventListener('pointermove', handlePointerMove);
         };
-    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing]);
+    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing, lines]);
 
-    useEffect(()=>{
-        if(completedWords.length === completedWord.length){
-            alert("You have found out all words")
-        }
-    },[completedWords, completedWord])
+    // useEffect(()=>{
+    //    if (completedWords.length === completedWord.length) {
+    //         // confetti();
+    // }},[completedWords, completedWord])
 
     return (
+    <>
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width}>
             <Container name='textArea'>
             {puzzle.map((word) => (
                 <Text
                     key={word.index}
                     text={word.text}
+                    anchor={0.5}
                     x={word.xPos}
                     y={word.yPos}
                     style={new TextStyle({
@@ -284,6 +308,8 @@ function PixiComponent2() {
                 })}
             />
         </Stage>
+        {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
+        </>
     );
 }
 
