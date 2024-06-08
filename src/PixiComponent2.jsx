@@ -272,9 +272,11 @@ function PixiComponent2() {
             alert("Congrats!!You have finished the game.")
     }},[completedWords, completedWord])
 
+
+    if(window.innerHeight > 600 && window.innerWidth > 800){
     return (
     <>
-        <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width}>
+        <Stage x={100} y={100} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width - 300}>
         <Graphics draw={draw} /> 
 
             <Container name='textArea'>
@@ -288,11 +290,12 @@ function PixiComponent2() {
                     style={new TextStyle({
                         fill: word.color,
                     })}
+                    interactive={true}
                 />
             ))}
             {/* <Graphics draw={draw} />  */}
             </Container>
-            <Text
+            {/* <Text
                 text={`Selected Word: ${selectedWord}`}
                 x={50}
                 y={50}
@@ -300,9 +303,9 @@ function PixiComponent2() {
                     fill: 'white',
                     fontSize: 24,
                 })}
-            />
+            /> */}
 
-                <Text
+                {/* <Text
                 text={`Given Words: ${givenWords}`}
                 x={500}
                 y={600}
@@ -328,11 +331,24 @@ function PixiComponent2() {
                     fill: 'white',
                     fontSize: 24,
                 })}
-            />
+            /> */}
         </Stage>
         {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
+        <br/>
+        <br/>
+        <h3>Selected Word: {selectedWord}</h3>
+        <h1>Given Words: {givenWords}</h1>
+        <h3>Completed Words: {StrCompletedWords}</h3>
         </>
     );
+}
+else{
+    return(
+        <>
+        <p>Coming soon on this</p>
+        </>
+    )
+}
 }
 
 export default PixiComponent2;
