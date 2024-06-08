@@ -20,6 +20,40 @@ function PixiComponent2() {
     const [lines, setLines] = useState([])
     const [StrCompletedWords,setStrCompletedWords] = useState("");
     let [tries, setTries] = useState(0)
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
+    const [completedTime, setCompletedTime] = useState(null);
+    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+
+    useEffect(() => {
+        setStartTime(new Date());
+        const interval = setInterval(() => {
+            setElapsedSeconds((prevSeconds) => prevSeconds + 1);
+        }, 1000);
+
+        // Clear the interval when the component unmounts
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        if (completedWords.length === completedWord.length && startTime) {
+            setEndTime(new Date());
+        }
+    }, [completedWords, completedWord, startTime]);
+
+    useEffect(() => {
+        if (startTime && endTime) {
+            const elapsed = endTime - startTime;
+            setCompletedTime(elapsed);
+        }
+    }, [startTime, endTime]);
+
+    useEffect(() => {
+        if (completedTime !== null) {
+            alert(`Congratulations! You completed the game in ${completedTime} milliseconds.`);
+        }
+    }, [completedTime]);
 
 
     useEffect(()=>{
@@ -340,6 +374,10 @@ function PixiComponent2() {
         <h3>Selected Word: {selectedWord}</h3>
         <h1>Given Words: {givenWords}</h1>
         <h3>Completed Words: {StrCompletedWords}</h3>
+        <h3>Time: {elapsedSeconds}</h3>
+        {completedTime && (
+                <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
+            )}
         </>
     );
 }
