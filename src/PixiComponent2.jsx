@@ -17,6 +17,8 @@ function PixiComponent2() {
     const [completedWords, setCompletedWords] = useState([])
     const [lineClear, setLineClear] = useState(false)
     const [lines, setLines] = useState([])
+    const [StrCompletedWords,setStrCompletedWords] = useState("");
+    let [tries, setTries] = useState(0)
 
 
     useEffect(()=>{
@@ -24,9 +26,15 @@ function PixiComponent2() {
     },[completedWord])
 
     const draw = useCallback((g)=>{
+        if(lines.length > 0){
+        lines.forEach(line=>{
+            if(line.clear === true){
+                g.clear;
+            }})}
+
         if(indices.length >=2 && !lineClear){
         g.clear()
-        g.lineStyle(3, 0xffd900);
+        g.lineStyle(2, 15853020);
         if(lines.length > 0){
         lines.forEach(line=>{
             if(line.clear === true){
@@ -143,8 +151,8 @@ function PixiComponent2() {
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
-                let color = word.color;
-                console.log("CCColor: "+color)
+                // let color = word.color;
+                // console.log("CCColor: "+color)
                 const letterPosition = { x: word.xPos, y: word.yPos };
                 const distance = Math.sqrt(
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
@@ -177,6 +185,7 @@ function PixiComponent2() {
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
                         word.selected = true
+                        setTries(tries++);
                 }
                 if(distance <= 40){
                     return {
@@ -216,7 +225,8 @@ function PixiComponent2() {
             else if(!completedWords.includes(selectedWord)){
                 setDrawing(false);
                 // alert("Congrats!! You have found a word");
-                setCompletedWords([...completedWords,selectedWord]);
+                setCompletedWords([...completedWords,selectedWord+"\t\t"]);
+                setStrCompletedWords(prev => prev + selectedWord + "\t\t");
                 console.log("completed:"+completedWords[0])
                 if(indices.length >= 2){
                     setLines((line)=>[
@@ -254,16 +264,19 @@ function PixiComponent2() {
             window.removeEventListener('pointerup', handlePointerUp);
             window.removeEventListener('pointermove', handlePointerMove);
         };
-    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing, lines]);
+    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing, lines, tries]);
 
-    // useEffect(()=>{
-    //    if (completedWords.length === completedWord.length) {
-    //         // confetti();
-    // }},[completedWords, completedWord])
+    useEffect(()=>{
+       if (completedWords.length === completedWord.length) {
+            // confetti();
+            alert("Congrats!!You have finished the game.")
+    }},[completedWords, completedWord])
 
     return (
     <>
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width}>
+        <Graphics draw={draw} /> 
+
             <Container name='textArea'>
             {puzzle.map((word) => (
                 <Text
@@ -277,7 +290,7 @@ function PixiComponent2() {
                     })}
                 />
             ))}
-            <Graphics draw={draw} /> 
+            {/* <Graphics draw={draw} />  */}
             </Container>
             <Text
                 text={`Selected Word: ${selectedWord}`}
@@ -299,9 +312,18 @@ function PixiComponent2() {
                 })}
             />
                 <Text
-                text={`Completed Words: ${completedWords}`}
+                text={`Completed Words: ${StrCompletedWords}`}
                 x={500}
                 y={650}
+                style={new TextStyle({
+                    fill: 'white',
+                    fontSize: 24,
+                })}
+            />
+                <Text
+                text={`Number of tries: ${tries}`}
+                x={500}
+                y={700}
                 style={new TextStyle({
                     fill: 'white',
                     fontSize: 24,
