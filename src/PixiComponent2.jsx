@@ -7,6 +7,7 @@ import { TextStyle } from 'pixi.js';
 // import confetti from 'canvas-confetti';
 
 function PixiComponent2() {
+    
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
     let completedWord = useMemo(()=>["ant", "tan", "nib", "bat"], []);
@@ -273,10 +274,10 @@ function PixiComponent2() {
     }},[completedWords, completedWord])
 
 
-    if(window.innerHeight > 600 && window.innerWidth > 800){
+    if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
-        <Stage x={100} y={100} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width - 300}>
+        <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
 
             <Container name='textArea'>
