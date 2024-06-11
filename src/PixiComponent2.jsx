@@ -246,7 +246,7 @@ function PixiComponent2() {
                 console.log(word.text)
                 return {
                     ...word,
-                    color: distance <= 20 ? 'green':word.initColor,
+                    color: distance <= 5 ? 'green':word.initColor,
                 };
             }
             });
@@ -275,7 +275,7 @@ function PixiComponent2() {
                             color:'green'
                         };
             }
-                else if(distance<20 && mobile){
+                else if(distance<5 && mobile){
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
