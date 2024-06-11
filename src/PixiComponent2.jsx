@@ -180,7 +180,7 @@ function PixiComponent2() {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 155 + 40 * (k);
+            let xPos = dimensions.width / 2 - 250 + 65 * (k);
             let yPos = dimensions.height / 2 - hei*2;
             k++;
 
