@@ -26,34 +26,34 @@ function PixiComponent2() {
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
 
-    useEffect(() => {
-        setStartTime(new Date());
-        const interval = setInterval(() => {
-            setElapsedSeconds((prevSeconds) => prevSeconds + 1);
-        }, 1000);
+    // useEffect(() => {
+    //     setStartTime(new Date());
+    //     const interval = setInterval(() => {
+    //         setElapsedSeconds((prevSeconds) => prevSeconds + 1);
+    //     }, 1000);
 
-        // Clear the interval when the component unmounts
-        return () => clearInterval(interval);
-    }, []);
+    //     // Clear the interval when the component unmounts
+    //     return () => clearInterval(interval);
+    // }, []);
 
-    useEffect(() => {
-        if (completedWords.length === completedWord.length && startTime) {
-            setEndTime(new Date());
-        }
-    }, [completedWords, completedWord, startTime]);
+    // useEffect(() => {
+    //     if (completedWords.length === completedWord.length && startTime) {
+    //         setEndTime(new Date());
+    //     }
+    // }, [completedWords, completedWord, startTime]);
 
-    useEffect(() => {
-        if (startTime && endTime) {
-            const elapsed = endTime - startTime;
-            setCompletedTime(elapsed);
-        }
-    }, [startTime, endTime]);
+    // useEffect(() => {
+    //     if (startTime && endTime) {
+    //         const elapsed = endTime - startTime;
+    //         setCompletedTime(elapsed);
+    //     }
+    // }, [startTime, endTime]);
 
-    useEffect(() => {
-        if (completedTime !== null) {
-            alert(`Congratulations! You completed the game in ${completedTime} milliseconds.`);
-        }
-    }, [completedTime]);
+    // useEffect(() => {
+    //     if (completedTime !== null) {
+    //         alert(`Congratulations! You completed the game in ${completedTime} milliseconds.`);
+    //     }
+    // }, [completedTime]);
 
 
     useEffect(()=>{
@@ -111,8 +111,9 @@ function PixiComponent2() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-
+    
     useEffect(() => {
+        if(window.innerHeight > 630 && window.innerWidth > 830){
         const textArr = ["a", "e", "e", "d", "n", "s", "e", "p", "t", "a", "n", "a", "a", "e", "i", "i", "a", "s", "o", "d", "t", "y", "t", "t", "b", "t", "r"];
         let hei;
         let k = 0;
@@ -146,11 +147,50 @@ function PixiComponent2() {
             });
         }
         setPuzzle(newPuzzle);
+    }
+    else{
+        const textArr = ["a", "e", "e", "d", "n", "s", "e", "p", "t", "a", "n", "a", "a", "e", "i", "i", "a", "s", "o", "d", "t", "y", "t", "t", "b", "t", "r"];
+        let hei;
+        let k = 0;
+        let newPuzzle = [];
+        for (let ind = 0; ind < 27; ind++) {
+            if (ind <= 8) {
+                hei = 50;
+            } else if (ind <= 17) {
+                hei = 0;
+                if (ind === 9) {
+                    k = 0;
+                }
+            } else {
+                hei = -50;
+                if (ind === 18) {
+                    k = 0;
+                }
+            }
+            let xPos = dimensions.width / 2 - 155 + 40 * (k);
+            let yPos = dimensions.height / 2 - hei*2;
+            k++;
+
+            newPuzzle.push({
+                text: textArr[ind],
+                xPos,
+                yPos,
+                color: 'black',
+                index: ind,
+                selected: false,
+                initColor: 'black'
+            });
+        }
+        setPuzzle(newPuzzle);
+    }
     }, [dimensions]);
 
 
     useEffect(() => {
         const handlePointerMove = (e) => {
+            if(!drawing){
+                return;
+            }
             if(drawing){
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
@@ -206,7 +246,6 @@ function PixiComponent2() {
         }
         };
         const handlePointerDown = (e) => {
-            setDrawing(true)
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -217,6 +256,7 @@ function PixiComponent2() {
                 );
                 if(distance< 40){
                     console.log(word.text)
+                    setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
                         word.selected = true
@@ -308,7 +348,7 @@ function PixiComponent2() {
     }},[completedWords, completedWord])
 
 
-    if(window.innerHeight > 630 && window.innerWidth > 830){
+
     return (
     <>
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>
@@ -374,20 +414,12 @@ function PixiComponent2() {
         <h3>Selected Word: {selectedWord}</h3>
         <h1>Given Words: {givenWords}</h1>
         <h3>Completed Words: {StrCompletedWords}</h3>
-        <h3>Time: {elapsedSeconds}</h3>
+        {/* <h3>Time: {elapsedSeconds}</h3>
         {completedTime && (
                 <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
-            )}
+            )} */}
         </>
     );
-}
-else{
-    return(
-        <>
-        <p>Coming soon on this</p>
-        </>
-    )
-}
 }
 
 export default PixiComponent2;
