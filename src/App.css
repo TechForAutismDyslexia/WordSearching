@@ -22,6 +22,18 @@
   }
 }
 
+.stage-container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (orientation: landscape) {
+  .stage-container {
+      flex-direction: row;
+  }
+}
+
+
  *{
 background-color: #AF8F6F;
 overflow: hidden;

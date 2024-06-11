@@ -26,6 +26,17 @@ function PixiComponent2() {
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
 
+    window.addEventListener("orientationchange", function() {
+        if (window.orientation === 90 || window.orientation === -90) {
+            // Landscape mode
+            document.querySelector('.stage').style.display = 'block';
+        } else {
+            // Portrait mode
+            document.querySelector('.stage').style.display = 'block';
+        }
+    });
+    
+
 
     // useEffect(() => {
     //     setStartTime(new Date());
@@ -246,7 +257,7 @@ function PixiComponent2() {
                 console.log(word.text)
                 return {
                     ...word,
-                    color: distance <= 5 ? 'green':word.initColor,
+                    color: distance <= 0.1 ? 'green':word.initColor,
                 };
             }
             });
@@ -275,7 +286,7 @@ function PixiComponent2() {
                             color:'green'
                         };
             }
-                else if(distance<5 && mobile){
+                else if(distance<0.1 && mobile){
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
