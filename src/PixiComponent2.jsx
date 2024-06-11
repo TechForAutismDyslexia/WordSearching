@@ -24,6 +24,7 @@ function PixiComponent2() {
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    const [mobile, setMobile] = useState(false)
 
 
     // useEffect(() => {
@@ -153,6 +154,7 @@ function PixiComponent2() {
         let hei;
         let k = 0;
         let newPuzzle = [];
+        setMobile(true)
         for (let ind = 0; ind < 27; ind++) {
             if (ind <= 8) {
                 hei = 150;
@@ -233,13 +235,20 @@ function PixiComponent2() {
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 )
-                if(distance< 40){
+                if(distance< 40 && !mobile){
                     console.log(word.text)
-                }
                 return {
                     ...word,
                     color: distance <= 40 ? 'green':word.initColor,
                 };
+            }
+            else{
+                console.log(word.text)
+                return {
+                    ...word,
+                    color: distance <= 20 ? 'green':word.initColor,
+                };
+            }
             });
 
             setPuzzle(updatedPuzzle);
@@ -254,19 +263,29 @@ function PixiComponent2() {
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
-                if(distance< 40){
+                if(distance< 40 && mobile){
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
                         word.selected = true
                         setTries(tries++);
-                }
-                if(distance <= 40){
-                    return {
-                        ...word,
-                        color:'green'
-                    };
+                        return {
+                            ...word,
+                            color:'green'
+                        };
+            }
+                else if(distance<20 && mobile){
+                    console.log(word.text)
+                    setDrawing(true)
+                        setSelectedWord(prev => prev + word.text)
+                        setIndices([...indices, word.index])
+                        word.selected = true
+                        setTries(tries++);
+                        return {
+                            ...word,
+                            color:'green'
+                        };
             }
             return word;
 
