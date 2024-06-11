@@ -155,14 +155,14 @@ function PixiComponent2() {
         let newPuzzle = [];
         for (let ind = 0; ind < 27; ind++) {
             if (ind <= 8) {
-                hei = 50;
+                hei = 150;
             } else if (ind <= 17) {
-                hei = 0;
+                hei = 100;
                 if (ind === 9) {
                     k = 0;
                 }
             } else {
-                hei = -50;
+                hei = 50;
                 if (ind === 18) {
                     k = 0;
                 }
