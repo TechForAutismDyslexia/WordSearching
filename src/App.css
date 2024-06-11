@@ -14,6 +14,14 @@
   justify-content: center;
   align-items: center;
 } */
+@media screen and (orientation: landscape) {
+  /* Adjust styles for landscape mode */
+  .stage {
+      display: block;
+      /* Other necessary styles */
+  }
+}
+
  *{
 background-color: #AF8F6F;
 overflow: hidden;
