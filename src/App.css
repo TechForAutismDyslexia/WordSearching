@@ -26,6 +26,20 @@
   display: flex;
   flex-direction: column;
 }
+/* App.css */
+.stage-container {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.stage {
+  display: block;
+  overflow: hidden;
+}
+
 
 @media screen and (orientation: landscape) {
   .stage-container {
