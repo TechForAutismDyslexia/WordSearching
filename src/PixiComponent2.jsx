@@ -168,14 +168,14 @@ function PixiComponent2() {
         setMobile(true)
         for (let ind = 0; ind < 27; ind++) {
             if (ind <= 8) {
-                hei = 150;
+                hei = 50;
             } else if (ind <= 17) {
-                hei = 100;
+                hei = 0;
                 if (ind === 9) {
                     k = 0;
                 }
             } else {
-                hei = 50;
+                hei = -50;
                 if (ind === 18) {
                     k = 0;
                 }
@@ -378,7 +378,7 @@ function PixiComponent2() {
     }},[completedWords, completedWord])
 
 
-
+if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>
@@ -439,6 +439,7 @@ function PixiComponent2() {
             /> */}
         </Stage>
         {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
+        
         <br/>
         <br/>
         <h3>Selected Word: {selectedWord}</h3>
@@ -450,6 +451,81 @@ function PixiComponent2() {
             )} */}
         </>
     );
+}
+else{
+    return (
+        <>
+            <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width}>
+            <Graphics draw={draw} /> 
+    
+                <Container name='textArea'>
+                {puzzle.map((word) => (
+                    <Text
+                        key={word.index}
+                        text={word.text}
+                        anchor={0.5}
+                        x={word.xPos}
+                        y={word.yPos}
+                        style={new TextStyle({
+                            fill: word.color,
+                        })}
+                        interactive={true}
+                    />
+                ))}
+                {/* <Graphics draw={draw} />  */}
+                </Container>
+                {/* <Text
+                    text={`Selected Word: ${selectedWord}`}
+                    x={50}
+                    y={50}
+                    style={new TextStyle({
+                        fill: 'white',
+                        fontSize: 24,
+                    })}
+                /> */}
+    
+                    {/* <Text
+                    text={`Given Words: ${givenWords}`}
+                    x={500}
+                    y={600}
+                    style={new TextStyle({
+                        fill: 'white',
+                        fontSize: 24,
+                    })}
+                />
+                    <Text
+                    text={`Completed Words: ${StrCompletedWords}`}
+                    x={500}
+                    y={650}
+                    style={new TextStyle({
+                        fill: 'white',
+                        fontSize: 24,
+                    })}
+                />
+                    <Text
+                    text={`Number of tries: ${tries}`}
+                    x={500}
+                    y={700}
+                    style={new TextStyle({
+                        fill: 'white',
+                        fontSize: 24,
+                    })}
+                /> */}
+            </Stage>
+            {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
+            
+            <br/>
+            <br/>
+            <h3>Selected Word: {selectedWord}</h3>
+            <h1>Given Words: {givenWords}</h1>
+            <h3>Completed Words: {StrCompletedWords}</h3>
+            {/* <h3>Time: {elapsedSeconds}</h3>
+            {completedTime && (
+                    <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
+                )} */}
+            </>
+        );
+}
 }
 
 export default PixiComponent2;
