@@ -3,11 +3,13 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
+import {useNavigate} from 'react-router-dom';
+import Confetti from 'react-confetti';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
 function PixiComponent2() {
-    
+    // const navigate = useNavigate(); 
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
     let completedWord = useMemo(()=>["ant", "tan", "nib", "bat"], []);
@@ -26,6 +28,29 @@ function PixiComponent2() {
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
 
+    // const handlePreviousClick =()=>{
+    //     if(typeof onPrevious === 'function'){
+    //         onPrevious();
+    //     }
+    //     else{
+    //         navigate ('/');
+    //     }
+    // };
+
+    // const handleNextClick =()=>{
+    //     if(allPuzzlesCompleted){
+    //         const userResponse =window.confirm('Quit?')
+    //         if(userResponse){
+    //             window.close();
+    //         }
+    //     }
+    //     else{
+    //         if(typeof onNext === 'function'){
+    //             onNext();
+    //         }
+    //     }
+    // }
+
     useEffect(() => {
         setStartTime(new Date());
         const interval = setInterval(() => {
@@ -35,7 +60,6 @@ function PixiComponent2() {
         // Clear the interval when the component unmounts
         return () => clearInterval(interval);
     }, []);
-
     useEffect(() => {
         if (completedWords.length === completedWord.length && startTime) {
             setEndTime(new Date());
@@ -303,8 +327,8 @@ function PixiComponent2() {
 
     useEffect(()=>{
        if (completedWords.length === completedWord.length) {
-            // confetti();
-            alert("Congrats!!You have finished the game.")
+             Confetti();
+            // alert("Congrats!!You have finished the game.")
     }},[completedWords, completedWord])
 
 
@@ -377,7 +401,10 @@ function PixiComponent2() {
         <h3>Time: {elapsedSeconds}</h3>
         {completedTime && (
                 <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
+                
             )}
+            {/* <button onClick={onNext}>Next</button>
+            <button onClick={handlePreviousClick}>prev</button> */}
         </>
     );
 }
