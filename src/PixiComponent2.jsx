@@ -3,11 +3,13 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
+import {useNavigate} from 'react-router-dom';
+import Confetti from 'react-confetti';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
 function PixiComponent2() {
-    
+    // const navigate = useNavigate(); 
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
     let completedWord = useMemo(()=>["ant", "tan", "nib", "bat"], []);
@@ -24,7 +26,7 @@ function PixiComponent2() {
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
-    const [mobile, setMobile] = useState(false)
+
 
     window.addEventListener("orientationchange", function() {
         if (window.orientation === 90 || window.orientation === -90) {
@@ -44,15 +46,14 @@ function PixiComponent2() {
     //         setElapsedSeconds((prevSeconds) => prevSeconds + 1);
     //     }, 1000);
 
-    //     // Clear the interval when the component unmounts
-    //     return () => clearInterval(interval);
-    // }, []);
-
-    // useEffect(() => {
-    //     if (completedWords.length === completedWord.length && startTime) {
-    //         setEndTime(new Date());
-    //     }
-    // }, [completedWords, completedWord, startTime]);
+        // Clear the interval when the component unmounts
+        return () => clearInterval(interval);
+    }, []);
+    useEffect(() => {
+        if (completedWords.length === completedWord.length && startTime) {
+            setEndTime(new Date());
+        }
+    }, [completedWords, completedWord, startTime]);
 
     // useEffect(() => {
     //     if (startTime && endTime) {
@@ -373,8 +374,8 @@ function PixiComponent2() {
 
     useEffect(()=>{
        if (completedWords.length === completedWord.length) {
-            // confetti();
-            alert("Congrats!!You have finished the game.")
+             Confetti();
+            // alert("Congrats!!You have finished the game.")
     }},[completedWords, completedWord])
 
 
@@ -448,7 +449,10 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         {/* <h3>Time: {elapsedSeconds}</h3>
         {completedTime && (
                 <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
-            )} */}
+                
+            )}
+            {/* <button onClick={onNext}>Next</button>
+            <button onClick={handlePreviousClick}>prev</button> */}
         </>
     );
 }
