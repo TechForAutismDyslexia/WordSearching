@@ -23,7 +23,7 @@ function PixiComponent2() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
-    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
 
     window.addEventListener("orientationchange", function() {
@@ -40,12 +40,12 @@ function PixiComponent2() {
 
     useEffect(() => {
         setStartTime(new Date());
-        const interval = setInterval(() => {
-            setElapsedSeconds((prevSeconds) => prevSeconds + 1);
-        }, 1000);
+        // const interval = setInterval(() => {
+        //     // setElapsedSeconds((prevSeconds) => prevSeconds + 1);
+        // }, 1000);
 
-        // Clear the interval when the component unmounts
-        return () => clearInterval(interval);
+        // // Clear the interval when the component unmounts
+        // return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
