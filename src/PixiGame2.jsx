@@ -6,7 +6,7 @@ import { TextStyle } from 'pixi.js';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
-function PixiGame2() {
+function PixiComponent2() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
@@ -41,7 +41,7 @@ function PixiGame2() {
     useEffect(() => {
         setStartTime(new Date());
         // const interval = setInterval(() => {
-        //     // setElapsedSeconds((prevSeconds) => prevSeconds + 1);
+        //     setElapsedSeconds((prevSeconds) => prevSeconds + 1);
         // }, 1000);
 
         // // Clear the interval when the component unmounts
@@ -126,8 +126,8 @@ function PixiGame2() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];
-        let hei;
+            const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];
+            let hei;
         let k = 0;
         let newPuzzle = [];
         for (let ind = 0; ind < 27; ind++) {
@@ -286,7 +286,7 @@ function PixiGame2() {
                             color:'green'
                         };
             }
-                else if(distance == 0 && mobile){
+                else if(distance <40 && mobile){
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
@@ -528,4 +528,4 @@ else{
 }
 }
 
-export default PixiGame2;
+export default PixiComponent2;
