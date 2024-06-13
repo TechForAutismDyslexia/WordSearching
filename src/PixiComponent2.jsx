@@ -26,46 +26,46 @@ function PixiComponent2() {
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
 
-    // window.addEventListener("orientationchange", function() {
-    //     if (window.orientation === 90 || window.orientation === -90) {
-    //         // Landscape mode
-    //         document.querySelector('.stage').style.display = 'block';
-    //     } else {
-    //         // Portrait mode
-    //         document.querySelector('.stage').style.display = 'block';
-    //     }
-    // });
+    window.addEventListener("orientationchange", function() {
+        if (window.orientation === 90 || window.orientation === -90) {
+            // Landscape mode
+            document.querySelector('.stage').style.display = 'block';
+        } else {
+            // Portrait mode
+            document.querySelector('.stage').style.display = 'block';
+        }
+    });
     
 
 
-    // useEffect(() => {
-    //     setStartTime(new Date());
-    //     const interval = setInterval(() => {
-    //         setElapsedSeconds((prevSeconds) => prevSeconds + 1);
-    //     }, 1000);
+    useEffect(() => {
+        setStartTime(new Date());
+        const interval = setInterval(() => {
+            setElapsedSeconds((prevSeconds) => prevSeconds + 1);
+        }, 1000);
 
-    //     // Clear the interval when the component unmounts
-    //     return () => clearInterval(interval);
-    // }, []);
+        // Clear the interval when the component unmounts
+        return () => clearInterval(interval);
+    }, []);
 
-    // useEffect(() => {
-    //     if (completedWords.length === completedWord.length && startTime) {
-    //         setEndTime(new Date());
-    //     }
-    // }, [completedWords, completedWord, startTime]);
+    useEffect(() => {
+        if (completedWords.length === completedWord.length && startTime) {
+            setEndTime(new Date());
+        }
+    }, [completedWords, completedWord, startTime]);
 
-    // useEffect(() => {
-    //     if (startTime && endTime) {
-    //         const elapsed = endTime - startTime;
-    //         setCompletedTime(elapsed);
-    //     }
-    // }, [startTime, endTime]);
+    useEffect(() => {
+        if (startTime && endTime) {
+            const elapsed = endTime - startTime;
+            setCompletedTime(elapsed);
+        }
+    }, [startTime, endTime]);
 
-    // useEffect(() => {
-    //     if (completedTime !== null) {
-    //         alert(`Congratulations! You completed the game in ${completedTime} milliseconds.`);
-    //     }
-    // }, [completedTime]);
+    useEffect(() => {
+        if (completedTime !== null) {
+            alert(`Congratulations! You completed the game in ${completedTime / 1000} seconds.`);
+        }
+    }, [completedTime]);
 
 
     useEffect(()=>{
@@ -274,7 +274,7 @@ function PixiComponent2() {
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
-                if(distance< 40 && mobile){
+                if(distance< 40 && !mobile){
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
