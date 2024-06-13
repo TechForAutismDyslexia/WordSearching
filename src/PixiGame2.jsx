@@ -6,11 +6,11 @@ import { TextStyle } from 'pixi.js';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
-function PixiComponent2() {
+function PixiGame2() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>["ant", "tan", "nib", "bat"], []);
+    let completedWord = useMemo(()=>["one", "eat", "tie", "ear"], []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -23,49 +23,49 @@ function PixiComponent2() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
-    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
 
-    // window.addEventListener("orientationchange", function() {
-    //     if (window.orientation === 90 || window.orientation === -90) {
-    //         // Landscape mode
-    //         document.querySelector('.stage').style.display = 'block';
-    //     } else {
-    //         // Portrait mode
-    //         document.querySelector('.stage').style.display = 'block';
-    //     }
-    // });
+    window.addEventListener("orientationchange", function() {
+        if (window.orientation === 90 || window.orientation === -90) {
+            // Landscape mode
+            document.querySelector('.stage').style.display = 'block';
+        } else {
+            // Portrait mode
+            document.querySelector('.stage').style.display = 'block';
+        }
+    });
     
 
 
-    // useEffect(() => {
-    //     setStartTime(new Date());
-    //     const interval = setInterval(() => {
-    //         setElapsedSeconds((prevSeconds) => prevSeconds + 1);
-    //     }, 1000);
+    useEffect(() => {
+        setStartTime(new Date());
+        // const interval = setInterval(() => {
+        //     // setElapsedSeconds((prevSeconds) => prevSeconds + 1);
+        // }, 1000);
 
-    //     // Clear the interval when the component unmounts
-    //     return () => clearInterval(interval);
-    // }, []);
+        // // Clear the interval when the component unmounts
+        // return () => clearInterval(interval);
+    }, []);
 
-    // useEffect(() => {
-    //     if (completedWords.length === completedWord.length && startTime) {
-    //         setEndTime(new Date());
-    //     }
-    // }, [completedWords, completedWord, startTime]);
+    useEffect(() => {
+        if (completedWords.length === completedWord.length && startTime) {
+            setEndTime(new Date());
+        }
+    }, [completedWords, completedWord, startTime]);
 
-    // useEffect(() => {
-    //     if (startTime && endTime) {
-    //         const elapsed = endTime - startTime;
-    //         setCompletedTime(elapsed);
-    //     }
-    // }, [startTime, endTime]);
+    useEffect(() => {
+        if (startTime && endTime) {
+            const elapsed = endTime - startTime;
+            setCompletedTime(elapsed);
+        }
+    }, [startTime, endTime]);
 
-    // useEffect(() => {
-    //     if (completedTime !== null) {
-    //         alert(`Congratulations! You completed the game in ${completedTime} milliseconds.`);
-    //     }
-    // }, [completedTime]);
+    useEffect(() => {
+        if (completedTime !== null) {
+            alert(`Congratulations! You completed the game in ${completedTime / 1000} seconds.`);
+        }
+    }, [completedTime]);
 
 
     useEffect(()=>{
@@ -126,7 +126,7 @@ function PixiComponent2() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr = ["a", "e", "e", "d", "n", "s", "e", "p", "t", "a", "n", "a", "a", "e", "i", "i", "a", "s", "o", "d", "t", "y", "t", "t", "b", "t", "r"];
+        const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];
         let hei;
         let k = 0;
         let newPuzzle = [];
@@ -161,7 +161,7 @@ function PixiComponent2() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr = ["a", "e", "e", "d", "n", "s", "e", "p", "t", "a", "n", "a", "a", "e", "i", "i", "a", "s", "o", "d", "t", "y", "t", "t", "b", "t", "r"];
+        const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];
         let hei;
         let k = 0;
         let newPuzzle = [];
@@ -286,7 +286,7 @@ function PixiComponent2() {
                             color:'green'
                         };
             }
-                else if(distance <40 && mobile){
+                else if(distance == 0 && mobile){
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
@@ -528,4 +528,4 @@ else{
 }
 }
 
-export default PixiComponent2;
+export default PixiGame2;
