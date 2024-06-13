@@ -3,7 +3,7 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
-import Voice from './Voice';
+import Voice from './Voice.jsx';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
@@ -127,7 +127,7 @@ function PixiComponent2() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr = ["a", "e", "e", "d", "n", "s", "e", "p", "t", "a", "n", "a", "a", "e", "i", "i", "a", "s", "o", "d", "t", "y", "t", "t", "b", "t", "r"];
+        const textArr = ["a", "x", "a", "x", "n", "u", "v", "u", "t","r", "n", "m", "a", "l", "i", "o", "a", "o","x", "l", "t", "d", "p", "q", "b", "r", "w"];
         let hei;
         let k = 0;
         let newPuzzle = [];
@@ -162,7 +162,7 @@ function PixiComponent2() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr = ["a", "e", "e", "d", "n", "s", "e", "p", "t", "a", "n", "a", "a", "e", "i", "i", "a", "s", "o", "d", "t", "y", "t", "t", "b", "t", "r"];
+        const textArr = ["a", "x", "a", "x", "n", "u", "v", "u", "t","r", "n", "m", "a", "l", "i", "o", "a", "o","x", "l", "t", "d", "p", "q", "b", "r", "w"];
         let hei;
         let k = 0;
         let newPuzzle = [];
@@ -473,9 +473,11 @@ else{
         <div className="App">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" style={{height: 35}}/>
-        <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+        <div className="description">Find the words listed below.<br/>Click and drag on the letters to select them.</div>
+        <img src ='./play.png' alt='Play Button' className='play-button' onClick={handleImageClick} style={{height: 35, marginTop: 10}}/>
       </div>
     </div>
+    <audio ref={audioRef} src='./Instructions.mp3'/>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
             <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
