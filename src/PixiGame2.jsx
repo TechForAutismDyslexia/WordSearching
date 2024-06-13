@@ -445,6 +445,10 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <h3>Selected Word: {selectedWord}</h3>
         <h1>Given Words: {givenWords}</h1>
         <h3>Completed Words: {StrCompletedWords}</h3>
+        <div style={{marginLeft: window.innerWidth/3}}>
+        <a type="button" className="btn btn-secondary btn-lg">Previous</a>
+            <a type="button" className="btn btn-secondary btn-lg" href='/game2' style={{marginLeft: window.innerWidth/4}}>Next</a>
+            </div>
         {/* <h3>Time: {elapsedSeconds}</h3>
         {completedTime && (
                 <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
@@ -519,6 +523,12 @@ else{
             <h3>Selected Word: {selectedWord}</h3>
             <h1>Given Words: {givenWords}</h1>
             <h3>Completed Words: {StrCompletedWords}</h3>
+            <a type="button" className="btn btn-secondary" href='/'>Previous</a>
+            <a type="button" className="btn btn-secondary">Next</a>
+            <div style={{marginLeft: window.innerWidth/3}}>
+        <a type="button" className="btn btn-secondary btn-lg">Previous</a>
+            <a type="button" className="btn btn-secondary btn-lg" href='/game2' style={{marginLeft: window.innerWidth/4}}>Next</a>
+            </div>
             {/* <h3>Time: {elapsedSeconds}</h3>
             {completedTime && (
                     <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
