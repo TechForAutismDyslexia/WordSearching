@@ -3,6 +3,7 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
+import Voice from './Voice';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
@@ -381,6 +382,7 @@ function PixiComponent2() {
 if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
+    <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/>
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
 
@@ -459,6 +461,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
 else{
     return (
         <>
+        <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/>
             <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
     
