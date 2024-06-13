@@ -382,7 +382,14 @@ function PixiComponent2() {
 if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
-            <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/>
+    
+            {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
+            <div className="App">
+      <div className="image-container">
+        <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" style={{height: 35}}/>
+        <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+      </div>
+    </div>
 
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
@@ -463,7 +470,13 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
 else{
     return (
         <>
-        <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/>
+        <div className="App">
+      <div className="image-container">
+        <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" style={{height: 35}}/>
+        <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+      </div>
+    </div>
+        {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
             <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
     
