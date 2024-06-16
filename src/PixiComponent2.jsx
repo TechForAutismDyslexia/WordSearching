@@ -370,7 +370,7 @@ function PixiComponent2() {
             window.removeEventListener('pointerup', handlePointerUp);
             window.removeEventListener('pointermove', handlePointerMove);
         };
-    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing, lines, tries]);
+    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing, lines, tries, mobile]);
 
     useEffect(()=>{
        if (completedWords.length === completedWord.length) {
@@ -470,7 +470,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
 else{
     return (
         <>
-        <div className="App">
+        <div className="App1">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" style={{height: 35}}/>
         <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
