@@ -410,43 +410,6 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
             ))}
             {/* <Graphics draw={draw} />  */}
             </Container>
-            {/* <Text
-                text={`Selected Word: ${selectedWord}`}
-                x={50}
-                y={50}
-                style={new TextStyle({
-                    fill: 'white',
-                    fontSize: 24,
-                })}
-            /> */}
-
-                {/* <Text
-                text={`Given Words: ${givenWords}`}
-                x={500}
-                y={600}
-                style={new TextStyle({
-                    fill: 'white',
-                    fontSize: 24,
-                })}
-            />
-                <Text
-                text={`Completed Words: ${StrCompletedWords}`}
-                x={500}
-                y={650}
-                style={new TextStyle({
-                    fill: 'white',
-                    fontSize: 24,
-                })}
-            />
-                <Text
-                text={`Number of tries: ${tries}`}
-                x={500}
-                y={700}
-                style={new TextStyle({
-                    fill: 'white',
-                    fontSize: 24,
-                })}
-            /> */}
         </Stage>
         {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
         
@@ -496,43 +459,6 @@ else{
                 ))}
                 {/* <Graphics draw={draw} />  */}
                 </Container>
-                {/* <Text
-                    text={`Selected Word: ${selectedWord}`}
-                    x={50}
-                    y={50}
-                    style={new TextStyle({
-                        fill: 'white',
-                        fontSize: 24,
-                    })}
-                /> */}
-    
-                    {/* <Text
-                    text={`Given Words: ${givenWords}`}
-                    x={500}
-                    y={600}
-                    style={new TextStyle({
-                        fill: 'white',
-                        fontSize: 24,
-                    })}
-                />
-                    <Text
-                    text={`Completed Words: ${StrCompletedWords}`}
-                    x={500}
-                    y={650}
-                    style={new TextStyle({
-                        fill: 'white',
-                        fontSize: 24,
-                    })}
-                />
-                    <Text
-                    text={`Number of tries: ${tries}`}
-                    x={500}
-                    y={700}
-                    style={new TextStyle({
-                        fill: 'white',
-                        fontSize: 24,
-                    })}
-                /> */}
             </Stage>
             {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
             
