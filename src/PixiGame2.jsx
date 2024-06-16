@@ -3,7 +3,7 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
-import Voice from './Voice';
+// import Voice from './Voice';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 

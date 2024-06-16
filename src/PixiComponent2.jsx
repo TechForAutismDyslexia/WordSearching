@@ -3,7 +3,7 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
-import Voice from './Voice.jsx';
+// import Voice from './Voice.jsx';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
@@ -24,7 +24,7 @@ function PixiComponent2() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
-    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
 
     window.addEventListener("orientationchange", function() {
