@@ -473,11 +473,9 @@ else{
         <div className="App">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" style={{height: 35}}/>
-        <div className="description">Find the words listed below.<br/>Click and drag on the letters to select them.</div>
-        <img src ='./play.png' alt='Play Button' className='play-button' onClick={handleImageClick} style={{height: 35, marginTop: 10}}/>
+        <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
       </div>
     </div>
-    <audio ref={audioRef} src='./Instructions.mp3'/>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
             <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
