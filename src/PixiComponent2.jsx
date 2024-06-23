@@ -214,8 +214,8 @@ function PixiComponent2() {
         const handlePointerMove = (e) => {
             if(drawing){
             const updatedPuzzle = puzzle.map((word) => {
-                const pointerPosition_x = e.clientX;
-                const pointerPosition_y = e.clientY;
+                const pointerPosition_x = e.clientX + window.scrollX;
+                const pointerPosition_y = e.clientY + window.scrollY;
                 let color = word.color;
                 // console.log("CCColor: "+color)
                 const letterPosition = { x: word.xPos, y: word.yPos };
@@ -245,8 +245,8 @@ function PixiComponent2() {
         }
         else{
             const updatedPuzzle = puzzle.map((word) => {
-                const pointerPosition_x = e.clientX;
-                const pointerPosition_y = e.clientY;
+                const pointerPosition_x = e.clientX + window.scrollX;
+                const pointerPosition_y = e.clientY + window.scrollY;
                 // let color = word.color;
                 // console.log("CCColor: "+color)
                 const letterPosition = { x: word.xPos, y: word.yPos };
@@ -275,8 +275,8 @@ function PixiComponent2() {
         };
         const handlePointerDown = (e) => {
             const updatedPuzzle = puzzle.map((word) => {
-                const pointerPosition_x = e.clientX;
-                const pointerPosition_y = e.clientY;
+                const pointerPosition_x = e.clientX + window.scrollX;
+                const pointerPosition_y = e.clientY + window.scrollY;
                 const letterPosition = { x: word.xPos, y: word.yPos };
                 const distance = Math.sqrt(
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
@@ -445,7 +445,7 @@ else{
         <div className="App1">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
-        <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+        <div className="description">Find the words listed below. Click and drag on the letters to select them.</div>
       </div>
     </div>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
