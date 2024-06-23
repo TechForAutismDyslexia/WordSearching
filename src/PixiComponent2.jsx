@@ -453,7 +453,7 @@ if((window.innerHeight > 630 && window.innerWidth > 830) && (puzzle)){
         </>
     );
 }
-else if((window.innerHeight <= 630 && window.innerWidth <= 830) && (puzzle)){
+else if((puzzle)){
     return (
         <>
         <div className="App1">
