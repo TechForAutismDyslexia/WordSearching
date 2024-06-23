@@ -3,7 +3,7 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
-import Voice from './Voice.jsx';
+// import Voice from './Voice.jsx';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
@@ -37,7 +37,6 @@ function PixiComponent2() {
         }
     });
     
-
     function readOutLoud(text){
         if ('speechSynthesis' in window) {
             // Speech Synthesis supported 🎉
@@ -244,7 +243,7 @@ function PixiComponent2() {
 
             setPuzzle(updatedPuzzle);
         }
-        else if(!drawing && puzzle){
+        else{
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -275,7 +274,6 @@ function PixiComponent2() {
         }
         };
         const handlePointerDown = (e) => {
-            if(puzzle){
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -285,8 +283,7 @@ function PixiComponent2() {
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
                 if(distance< 40 && !mobile){
-                    // readOutLoud(word.text)
-                    console.log("Word: "+word.text)
+                    console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
@@ -313,12 +310,10 @@ function PixiComponent2() {
 
         });
         setPuzzle(updatedPuzzle)
-    }
         };
 
         const handlePointerUp = () => {
-            if(drawing && puzzle){
-                setTries(prev => prev + 1);
+            setDrawing(false);
             console.log(indices)
             if (!completedWord.includes(selectedWord)) {
                 for(let l=0;l<indices.length;l++){
@@ -336,14 +331,14 @@ function PixiComponent2() {
                 }
                 }
                 setSelectedWord("")
-                // setDrawing(false);
+                setDrawing(false);
                 setIndices([])
                 setLineClear(true)
             } 
             else if(!completedWords.includes(selectedWord)){
-                // setDrawing(false);
-                // alert("Congrats!! You have found a word");
+                setDrawing(false);
                 readOutLoud(selectedWord)
+                // alert("Congrats!! You have found a word");
                 setCompletedWords([...completedWords,selectedWord+"\t\t"]);
                 setStrCompletedWords(prev => prev + selectedWord + "\t\t");
                 console.log("completed:"+completedWords[0])
@@ -370,11 +365,9 @@ function PixiComponent2() {
             }
             else{
                 alert("Already found the word "+selectedWord+"!!")
-                readOutLoud(selectedWord)
+                readOutLoud(selectedWord);
                 setSelectedWord("")
             }
-            setDrawing(false);
-        }
         };
 
         window.addEventListener('pointerdown', handlePointerDown);
@@ -395,7 +388,7 @@ function PixiComponent2() {
     }},[completedWords, completedWord])
 
 
-if((window.innerHeight > 630 && window.innerWidth > 830) && (puzzle)){
+if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
     
@@ -405,11 +398,8 @@ if((window.innerHeight > 630 && window.innerWidth > 830) && (puzzle)){
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
       </div>
-      <h3 style={{display:'flex', float:'right', marginLeft: window.innerWidth/2}}>Tries: {tries}</h3>
-
     </div>
-    
-    {Voice("hello people")}
+
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
 
@@ -434,17 +424,13 @@ if((window.innerHeight > 630 && window.innerWidth > 830) && (puzzle)){
         
         <br/>
         <br/>
-        {/* <span style={{display: 'flex', gap: window.innerWidth/4}}><h3 className='selWord' style={{marginLeft:window.innerWidth/4 + 50}}>Selected Word: {selectedWord}</h3>
-        <h3>Tries: {tries}</h3></span> */}
-        {/* <h3 style={{display:'flex', float:'right', marginRight: 100}}>Tries: {tries}</h3> */}
+        <h3>Selected Word: {selectedWord}</h3>
         <h1>Given Words: {givenWords}</h1>
         <h3>Completed Words: {StrCompletedWords}</h3>
         <br/>
         <div style={{marginLeft: window.innerWidth/4 + 100}}>
         <a type="button" className="btn btn-secondary btn-lg">Previous</a>
             <a type="button" className="btn btn-secondary btn-lg" href='/game2' style={{marginLeft: window.innerWidth/4}}>Next</a>
-            <br/>
-            <br/>
             </div>
         {/* <h3>Time: {elapsedSeconds}</h3>
         {completedTime && (
@@ -453,17 +439,17 @@ if((window.innerHeight > 630 && window.innerWidth > 830) && (puzzle)){
         </>
     );
 }
-else if((puzzle)){
+else{
     return (
         <>
         <div className="App1">
       <div className="image-container">
-        <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" style={{height: 35}}/>
+        <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
       </div>
     </div>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
-            <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 50} width={dimensions.width - 150} className='stage-container'>
+            <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
     
                 <Container name='textArea'>
@@ -487,8 +473,7 @@ else if((puzzle)){
             
             <br/>
             <br/>
-            <span style={{display: 'flex', gap: window.innerWidth/4}}><h3 className='selWord' style={{marginLeft:window.innerWidth/5}}>Selected Word: {selectedWord}</h3>
-            <h3>Tries: {tries}</h3></span>
+            <h3>Selected Word: {selectedWord}</h3>
             <h1>Given Words: {givenWords}</h1>
             <h3>Completed Words: {StrCompletedWords}</h3>
             <div style={{marginLeft: window.innerWidth/4}}>
