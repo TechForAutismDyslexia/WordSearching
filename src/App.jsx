@@ -3,8 +3,6 @@
 import PixiComponent2 from './PixiComponent2'
 import PixiGame2 from './PixiGame2'
 import { BrowserRouter as Path, Route, Routes } from 'react-router-dom'
-
-
 function App() {
 
   return (

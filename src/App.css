@@ -96,7 +96,7 @@ background-color: #AF8F6F;
 /* overflow: hidden; */
 }
 
-h1, h3{
+h1, h3:not(.selWord){
   text-align: center;
   align-items: center;
 }

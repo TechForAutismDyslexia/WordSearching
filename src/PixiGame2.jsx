@@ -3,7 +3,7 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
-// import Voice from './Voice';
+// import Voice from './Voice.jsx';
 // import { clear } from 'console';
 // import confetti from 'canvas-confetti';
 
@@ -11,7 +11,7 @@ function PixiComponent2() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>["one", "eat", "tie", "ear"], []);
+    let completedWord = useMemo(()=>["ant", "tan", "nib", "bat"], []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -64,7 +64,7 @@ function PixiComponent2() {
 
     useEffect(() => {
         if (completedTime !== null) {
-            alert(`Congratulations! You completed the game in ${completedTime / 1000} seconds.`);
+            alert(`Congratulations! You completed the game in ${completedTime/1000} seconds.`);
         }
     }, [completedTime]);
 
@@ -127,8 +127,8 @@ function PixiComponent2() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-            const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];
-            let hei;
+        const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];
+        let hei;
         let k = 0;
         let newPuzzle = [];
         for (let ind = 0; ind < 27; ind++) {
@@ -202,9 +202,6 @@ function PixiComponent2() {
 
     useEffect(() => {
         const handlePointerMove = (e) => {
-            if(!drawing){
-                return;
-            }
             if(drawing){
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
@@ -236,7 +233,7 @@ function PixiComponent2() {
 
             setPuzzle(updatedPuzzle);
         }
-        else{
+        else if(!drawing && puzzle){
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -267,6 +264,7 @@ function PixiComponent2() {
         }
         };
         const handlePointerDown = (e) => {
+            if(puzzle){
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX;
                 const pointerPosition_y = e.clientY;
@@ -303,10 +301,12 @@ function PixiComponent2() {
 
         });
         setPuzzle(updatedPuzzle)
+    }
         };
 
         const handlePointerUp = () => {
-            setDrawing(false);
+            if(drawing && puzzle){
+                setTries(prev => prev + 1);
             console.log(indices)
             if (!completedWord.includes(selectedWord)) {
                 for(let l=0;l<indices.length;l++){
@@ -359,6 +359,8 @@ function PixiComponent2() {
                 alert("Already found the word "+selectedWord+"!!")
                 setSelectedWord("")
             }
+            setDrawing(false);
+        }
         };
 
         window.addEventListener('pointerdown', handlePointerDown);
@@ -370,7 +372,7 @@ function PixiComponent2() {
             window.removeEventListener('pointerup', handlePointerUp);
             window.removeEventListener('pointermove', handlePointerMove);
         };
-    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing, lines, tries]);
+    }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing, lines, tries, mobile]);
 
     useEffect(()=>{
        if (completedWords.length === completedWord.length) {
@@ -382,14 +384,15 @@ function PixiComponent2() {
 if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
-    <div className="App">
+    
+            {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
+            <div className="App">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" style={{height: 35}}/>
         <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
       </div>
     </div>
 
-    {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
 
@@ -417,9 +420,13 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <h3>Selected Word: {selectedWord}</h3>
         <h1>Given Words: {givenWords}</h1>
         <h3>Completed Words: {StrCompletedWords}</h3>
-        <div style={{marginLeft: window.innerWidth/3}}>
-        <a type="button" className="btn btn-secondary btn-lg" href='/'>Previous</a>
-            <a type="button" className="btn btn-secondary btn-lg" style={{marginLeft: window.innerWidth/4}}>Next</a>
+        <h4>Tries: {tries}</h4>
+        <br/>
+        <div style={{marginLeft: window.innerWidth/4 + 100}}>
+        <a type="button" className="btn btn-secondary btn-lg">Previous</a>
+            <a type="button" className="btn btn-secondary btn-lg" href='/game2' style={{marginLeft: window.innerWidth/4}}>Next</a>
+            <br/>
+            <br/>
             </div>
         {/* <h3>Time: {elapsedSeconds}</h3>
         {completedTime && (
@@ -465,10 +472,12 @@ else{
             <h3>Selected Word: {selectedWord}</h3>
             <h1>Given Words: {givenWords}</h1>
             <h3>Completed Words: {StrCompletedWords}</h3>
+            <h4>Tries: {tries}</h4>
             <div style={{marginLeft: window.innerWidth/4}}>
-        <a type="button" className="btn btn-secondary" href='/'>Previous</a>
+        <a type="button" className="btn btn-secondary">Previous</a>
             <a type="button" className="btn btn-secondary" href='/game2' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
+
             {/* <h3>Time: {elapsedSeconds}</h3>
             {completedTime && (
                     <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
