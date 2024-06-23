@@ -27,15 +27,20 @@ function PixiComponent2() {
     // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
 
-    window.addEventListener("orientationchange", function() {
-        if (window.orientation === 90 || window.orientation === -90) {
-            // Landscape mode
-            document.querySelector('.stage').style.display = 'block';
-        } else {
-            // Portrait mode
-            document.querySelector('.stage').style.display = 'block';
+    const handleOrientationChange = useCallback(() => {
+        const stageElement = document.querySelector('.stage');
+        if (stageElement) {
+            stageElement.style.display = 'block';
         }
-    });
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener("orientationchange", handleOrientationChange);
+        return () => {
+            window.removeEventListener("orientationchange", handleOrientationChange);
+        };
+    }, [handleOrientationChange]);
+    
     
     function readOutLoud(text){
         if ('speechSynthesis' in window) {
@@ -51,12 +56,6 @@ function PixiComponent2() {
 
     useEffect(() => {
         setStartTime(new Date());
-        // const interval = setInterval(() => {
-        //     setElapsedSeconds((prevSeconds) => prevSeconds + 1);
-        // }, 1000);
-
-        // // Clear the interval when the component unmounts
-        // return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -212,10 +211,17 @@ function PixiComponent2() {
 
     useEffect(() => {
         const handlePointerMove = (e) => {
+            let pointerPosition_x, pointerPosition_y
             if(drawing){
             const updatedPuzzle = puzzle.map((word) => {
-                const pointerPosition_x = e.clientX + window.scrollX;
-                const pointerPosition_y = e.clientY + window.scrollY;
+                if(window.innerHeight > 630 && window.innerWidth > 830){
+                pointerPosition_x = e.clientX + window.scrollX;
+                pointerPosition_y = e.clientY + window.scrollY;
+                }
+                else{
+                pointerPosition_x = e.clientX;
+                pointerPosition_y = e.clientY;
+                }
                 let color = word.color;
                 // console.log("CCColor: "+color)
                 const letterPosition = { x: word.xPos, y: word.yPos };
@@ -275,8 +281,15 @@ function PixiComponent2() {
         };
         const handlePointerDown = (e) => {
             const updatedPuzzle = puzzle.map((word) => {
-                const pointerPosition_x = e.clientX + window.scrollX;
-                const pointerPosition_y = e.clientY + window.scrollY;
+                let pointerPosition_x, pointerPosition_y;
+                if(window.innerHeight > 630 && window.innerWidth > 830){
+                    pointerPosition_x = e.clientX + window.scrollX;
+                    pointerPosition_y = e.clientY + window.scrollY;
+                    }
+                    else{
+                    pointerPosition_x = e.clientX;
+                    pointerPosition_y = e.clientY;
+                    }
                 const letterPosition = { x: word.xPos, y: word.yPos };
                 const distance = Math.sqrt(
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
@@ -373,11 +386,19 @@ function PixiComponent2() {
         window.addEventListener('pointerdown', handlePointerDown);
         window.addEventListener('pointerup', handlePointerUp); 
         window.addEventListener('pointermove', handlePointerMove);
+
+        window.addEventListener('touchmove', handlePointerMove);
+        window.addEventListener('touchstart', handlePointerDown);
+        window.addEventListener('touchend', handlePointerUp);
        
         return () => {
             window.removeEventListener('pointerdown', handlePointerDown);
             window.removeEventListener('pointerup', handlePointerUp);
             window.removeEventListener('pointermove', handlePointerMove);
+
+            window.removeEventListener('touchmove', handlePointerMove);
+            window.removeEventListener('touchstart', handlePointerDown);
+            window.removeEventListener('touchend', handlePointerUp);
         };
     }, [puzzle, selectedWord, indices, completedWord, completedWords, drawing, lines, tries, mobile]);
 
@@ -432,6 +453,9 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <a type="button" className="btn btn-secondary btn-lg">Previous</a>
             <a type="button" className="btn btn-secondary btn-lg" href='/game2' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
+            <br/>
+            <br/>
+            <br/>
         {/* <h3>Time: {elapsedSeconds}</h3>
         {completedTime && (
                 <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
