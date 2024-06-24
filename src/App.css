@@ -89,12 +89,22 @@ opacity: 1;
       flex-direction: row;
   }
 }
-
-
- *{
-background-color: #AF8F6F;
-/* overflow: hidden; */
+*{
+  background-color: #AF8F6F;
 }
+/* @media (min-width: 851) and (max-width: 1000){
+.html{
+  background-color: #AF8F6F;
+  overflow: hidden;
+}
+}
+
+@media (min-width: 730) and (max-width: 850){
+.html{
+  background-color: #AF8F6F;
+  overflow: visible;
+}
+} */
 
 h1, h3:not(.selWord){
   text-align: center;

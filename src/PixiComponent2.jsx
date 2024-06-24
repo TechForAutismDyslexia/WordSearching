@@ -326,9 +326,13 @@ function PixiComponent2() {
         };
 
         const handlePointerUp = () => {
+            if(drawing){
+                setTries(prev=>prev+1)
+            }
             setDrawing(false);
             console.log(indices)
             if (!completedWord.includes(selectedWord)) {
+                // setTries(prev=>prev+1)
                 for(let l=0;l<indices.length;l++){
                     for(let k=0;k<puzzle.length;k++){
                     if(indices[l] === puzzle[k].index){
@@ -351,6 +355,7 @@ function PixiComponent2() {
             else if(!completedWords.includes(selectedWord)){
                 setDrawing(false);
                 readOutLoud(selectedWord)
+                // setTries(prev=>prev+1)
                 // alert("Congrats!! You have found a word");
                 setCompletedWords([...completedWords,selectedWord+"\t\t"]);
                 setStrCompletedWords(prev => prev + selectedWord + "\t\t");
@@ -377,6 +382,7 @@ function PixiComponent2() {
                 }
             }
             else{
+                // setTries(prev=>prev+1)
                 alert("Already found the word "+selectedWord+"!!")
                 readOutLoud(selectedWord);
                 setSelectedWord("")
@@ -414,10 +420,11 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
     <>
     
             {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
-            <div className="App">
+            <div className="App" style={{overflow: 'hidden'}}>
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
-        <div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+        <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+        <h4 style={{marginLeft: 800}}>Tries: {tries}</h4></span>
       </div>
     </div>
 
