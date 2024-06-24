@@ -424,7 +424,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
-        <h4 style={{marginLeft: 800}}>Tries: {tries}</h4></span>
+        <h4 style={{marginLeft: window.innerWidth/2 + 100}}>Tries: {tries}</h4></span>
       </div>
     </div>
 
@@ -476,7 +476,8 @@ else{
         <div className="App1">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
-        <div className="description">Find the words listed below. Click and drag on the letters to select them.</div>
+        <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+        <h4 style={{marginLeft: window.innerWidth/12}}>Tries: {tries}</h4></span>
       </div>
     </div>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
