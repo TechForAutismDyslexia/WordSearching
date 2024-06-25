@@ -3,11 +3,11 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
-// import Voice from './Voice.jsx';
-// import { clear } from 'console';
-// import confetti from 'canvas-confetti';
+import Confetti from 'react-confetti'
+// import ConfettiComponent from './ConfettiComponent';
+// import Confetti from 'canvas-confetti';
 
-function PixiGame2() {
+function PixiComponent2() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
@@ -26,6 +26,7 @@ function PixiGame2() {
     const [completedTime, setCompletedTime] = useState(null);
     // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
+    const [isCompleted, setIsCompleted] = useState(false)
 
     const handleOrientationChange = useCallback(() => {
         const stageElement = document.querySelector('.stage');
@@ -136,8 +137,7 @@ function PixiGame2() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];
-        let hei;
+            const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];        let hei;
         let k = 0;
         let newPuzzle = [];
         for (let ind = 0; ind < 27; ind++) {
@@ -171,8 +171,7 @@ function PixiGame2() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];
-        let hei;
+        const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];        let hei;
         let k = 0;
         let newPuzzle = [];
         setMobile(true)
@@ -326,9 +325,13 @@ function PixiGame2() {
         };
 
         const handlePointerUp = () => {
+            if(drawing){
+                setTries(prev=>prev+1)
+            }
             setDrawing(false);
             console.log(indices)
             if (!completedWord.includes(selectedWord)) {
+                // setTries(prev=>prev+1)
                 for(let l=0;l<indices.length;l++){
                     for(let k=0;k<puzzle.length;k++){
                     if(indices[l] === puzzle[k].index){
@@ -351,6 +354,7 @@ function PixiGame2() {
             else if(!completedWords.includes(selectedWord)){
                 setDrawing(false);
                 readOutLoud(selectedWord)
+                // setTries(prev=>prev+1)
                 // alert("Congrats!! You have found a word");
                 setCompletedWords([...completedWords,selectedWord+"\t\t"]);
                 setStrCompletedWords(prev => prev + selectedWord + "\t\t");
@@ -377,6 +381,7 @@ function PixiGame2() {
                 }
             }
             else{
+                // setTries(prev=>prev+1)
                 alert("Already found the word "+selectedWord+"!!")
                 readOutLoud(selectedWord);
                 setSelectedWord("")
@@ -405,16 +410,18 @@ function PixiGame2() {
     useEffect(()=>{
        if (completedWords.length === completedWord.length) {
             // confetti();
-            alert("Congrats!!You have finished the game.")
+            // alert("Congrats!!You have finished the game.")
+            setIsCompleted(true)
     }},[completedWords, completedWord])
 
 
 if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
-    
+    {isCompleted && <Confetti/>}
             {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
             <div className="App">
+    {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
@@ -451,7 +458,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <h3>Completed Words: {StrCompletedWords}</h3>
         <br/>
         <div style={{marginLeft: window.innerWidth/4 + 100}}>
-        <a type="button" className="btn btn-secondary btn-lg" href='/'>Previous</a>
+        <a type="button" className="btn btn-secondary btn-lg" href='/game1'>Previous</a>
             <a type="button" className="btn btn-secondary btn-lg" style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
             <br/>
@@ -463,6 +470,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
             )} */}
         </>
     );
+    
 }
 else{
     return (
@@ -503,7 +511,7 @@ else{
             <h1>Given Words: {givenWords}</h1>
             <h3>Completed Words: {StrCompletedWords}</h3>
             <div style={{marginLeft: window.innerWidth/4}}>
-        <a type="button" className="btn btn-secondary" href='/'>Previous</a>
+        <a type="button" className="btn btn-secondary" href='/game1'>Previous</a>
             <a type="button" className="btn btn-secondary" style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
 
@@ -516,4 +524,4 @@ else{
 }
 }
 
-export default PixiGame2;
+export default PixiComponent2;
