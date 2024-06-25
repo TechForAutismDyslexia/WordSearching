@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import './Home.css';
+// import Confetti from 'react-confetti';
 
 function Home() {
   return (
+    <>
+    {/* <Confetti/> */}
     <div className="App1">
       <div className="header-container">
         <h1 className='head1'>Word Search</h1>
@@ -13,6 +16,7 @@ function Home() {
         <button className="Start-button">Start</button>
       </Link>
     </div>
+    </>
   );
 }
 
