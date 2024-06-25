@@ -3,7 +3,7 @@ import './App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
-// import Confetti from 'react-confetti'
+import Confetti from 'react-confetti'
 // import ConfettiComponent from './ConfettiComponent';
 // import Confetti from 'canvas-confetti';
 
@@ -26,7 +26,7 @@ function PixiComponent2() {
     const [completedTime, setCompletedTime] = useState(null);
     // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
-    // const [isCompleted, setIsCompleted] = useState(false)
+    const [isCompleted, setIsCompleted] = useState(false)
 
     const handleOrientationChange = useCallback(() => {
         const stageElement = document.querySelector('.stage');
@@ -413,13 +413,14 @@ function PixiComponent2() {
        if (completedWords.length === completedWord.length) {
             // confetti();
             // alert("Congrats!!You have finished the game.")
-            // setIsCompleted(true)
+            setIsCompleted(true)
     }},[completedWords, completedWord])
 
 
 if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
+    {isCompleted && <Confetti/>}
             {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
             <div className="App">
     {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
