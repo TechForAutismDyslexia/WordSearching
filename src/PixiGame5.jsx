@@ -11,7 +11,7 @@ function PixiGame5() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>['map','pot','tap','pet','tip','pat','top','put','ten','nor','run'], []);
+    let completedWord = useMemo(()=>['his','sip','pin','nap','pan','bid','dip','pit','tag','gap'], []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -137,9 +137,9 @@ function PixiGame5() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr =  ['m','f','t','s','t','v','t','k','t','a','r','a','o','a','e','i','a','o','u','e','o','u','p','k','p','b','p','r','p','w','n','c','n'];
-        let hei;
+        const textArr =  ['h','u','d','l','p','f','t','i','p','t','p','f','i','a','i','o','i','o','a','o','a','r','b','s','s','m','p','c','n','l','g','e','n'];
         let k = 0;
+        let hei;
         let newPuzzle = [];
         for (let ind = 0; ind < textArr.length; ind++) {
             if (ind <= 10) {
@@ -172,7 +172,7 @@ function PixiGame5() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr =  ['m','f','t','s','t','v','t','k','t','a','r','a','o','a','e','i','a','o','u','e','o','u','p','k','p','b','p','r','p','w','n','c','n'];
+        const textArr =  ['h','u','d','l','p','f','t','i','p','t','p','f','i','a','i','o','i','o','a','o','a','r','b','s','s','m','p','c','n','l','g','e','n'];
         let hei;
         let k = 0;
         let newPuzzle = [];
