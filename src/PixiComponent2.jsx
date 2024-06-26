@@ -24,9 +24,12 @@ function PixiComponent2() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
-    // const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
+    const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
+    const [isStarted, setisStarted] = useState(false);
+
 
     const handleOrientationChange = useCallback(() => {
         const stageElement = document.querySelector('.stage');
@@ -63,12 +66,15 @@ function PixiComponent2() {
     }
 
     useEffect(() => {
-        setStartTime(new Date());
-    }, []);
+        if(isStarted){
+            setStartTime(new Date());
+        }
+    }, [isStarted]);
 
     useEffect(() => {
         if (completedWords.length === completedWord.length && startTime) {
             setEndTime(new Date());
+
         }
     }, [completedWords, completedWord, startTime]);
 
@@ -78,6 +84,21 @@ function PixiComponent2() {
             setCompletedTime(elapsed);
         }
     }, [startTime, endTime]);
+
+    useEffect(() => {
+        let interval = null;
+    
+        if (startTime && !endTime) {
+            interval = setInterval(() => {
+                setOngoingElapsedTime((new Date() - startTime) / 1000); // elapsed time in seconds
+            }, 1000);
+        } else if (endTime) {
+            clearInterval(interval);
+        }
+    
+        return () => clearInterval(interval);
+    }, [startTime, endTime]);
+    
 
     useEffect(() => {
         if (completedTime !== null) {
@@ -288,6 +309,7 @@ function PixiComponent2() {
         }
         };
         const handlePointerDown = (e) => {
+            setisStarted(true)
             const updatedPuzzle = puzzle.map((word) => {
                 let pointerPosition_x, pointerPosition_y;
                 if(window.innerHeight > 630 && window.innerWidth > 830){
@@ -437,7 +459,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
     {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
-        <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+        <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div> {isStarted && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', direction: 'rtl'}}><h3>Time: {ongoingElapsedTime.toFixed(0)}</h3> </div>}
         <h4 style={{marginLeft: window.innerWidth/2 + 100}}>Tries: {tries}</h4></span>
       </div>
     </div>
