@@ -161,8 +161,8 @@ function PixiGame7() {
                     k=0;
                 }
             }
-            let xPos = dimensions.width / 2 - 400 + 50 * (k);
-            let yPos = dimensions.height / 2 - hei;
+            let xPos = dimensions.width / 2 - 600 + 80 * (k);
+            let yPos = dimensions.height / 2 - hei - 60;
             k++;
 
             newPuzzle.push({
