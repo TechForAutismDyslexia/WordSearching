@@ -179,19 +179,19 @@ function PixiGame5() {
         setMobile(true)
         for (let ind = 0; ind < textArr.length; ind++) {
             if (ind <= 10) {
-                hei = 50;
+                hei = 80;
             } else if (ind <= 21) {
-                hei = 0;
+                hei = 45;
                 if (ind === 11) {
                     k = 0;
                 }
             } else {
-                hei = -50;
+                hei = 10;
                 if (ind === 22) {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 300 + 50 * (k);
+            let xPos = dimensions.width / 2 - 260 + 50 * (k);
             let yPos = dimensions.height / 2 - hei*2;
             k++;
 
@@ -481,7 +481,7 @@ else{
     return (
         <>
         {isCompleted && <Confetti/>}
-        <div className="App1">
+        <div className="A">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
@@ -489,7 +489,7 @@ else{
       </div>
     </div>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
-            <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
+            <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 140} width={dimensions.width - 120} className='stage-container'>
             <Graphics draw={draw} /> 
     
                 <Container name='textArea'>
@@ -509,13 +509,13 @@ else{
                 {/* <Graphics draw={draw} />  */}
                 </Container>
             </Stage>
+            <h3>Given Words: {givenWords}</h3>
+            <h4>Completed Words: {StrCompletedWords}</h4>
+            {/* <h3>Selected Word: {selectedWord}</h3> */}
             {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
             
             <br/>
             <br/>
-            <h3>Selected Word: {selectedWord}</h3>
-            <h1>Given Words: {givenWords}</h1>
-            <h3>Completed Words: {StrCompletedWords}</h3>
             <div style={{marginLeft: window.innerWidth/4}}>
         <a type="button" className="btn btn-secondary" href='/game4'>Previous</a>
             <a type="button" className="btn btn-secondary" href='/game6' style={{marginLeft: window.innerWidth/4}}>Next</a>
