@@ -7,11 +7,11 @@ import Confetti from 'react-confetti'
 // import ConfettiComponent from './ConfettiComponent';
 // import Confetti from 'canvas-confetti';
 
-function PixiGame3() {
+function PixiGame4() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>['end','den','nod','dad','dip','pop','pat','top','pan'], []);
+    let completedWord = useMemo(()=>['map','pot','tap','pet','tip','pat','top','put','ten','nor','run'], []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -137,25 +137,25 @@ function PixiGame3() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr =  ['e','x','n','r','d','a','p','c','p','n','e','o','a','i','o','a','o','a','d','g','d','k','p','u','t','m','n'];
+        const textArr =  ['m','f','t','s','t','v','t','k','t','a','r','a','o','a','e','i','a','o','u','e','o','u','p','k','p','b','p','r','p','w','n','c','n'];
         let hei;
         let k = 0;
         let newPuzzle = [];
-        for (let ind = 0; ind < 27; ind++) {
-            if (ind <= 8) {
+        for (let ind = 0; ind < textArr.length; ind++) {
+            if (ind <= 10) {
                 hei = 150;
-            } else if (ind <= 17) {
+            } else if (ind <= 21) {
                 hei = 50;
-                if (ind === 9) {
+                if (ind === 11) {
                     k = 0;
                 }
             } else {
                 hei = -50;
-                if (ind === 18) {
+                if (ind === 22) {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 400 + 100 * (k);
+            let xPos = dimensions.width / 2 - 400 + 90 * (k);
             let yPos = dimensions.height / 2 - hei;
             k++;
 
@@ -172,26 +172,26 @@ function PixiGame3() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr =['e','x','n','r','d','a','p','c','p','n','e','o','a','i','o','a','o','a','d','g','d','k','p','u','t','m','n'];
+        const textArr =  ['m','f','t','s','t','v','t','k','t','a','r','a','o','a','e','i','a','o','u','e','o','u','p','k','p','b','p','r','p','w','n','c','n'];
         let hei;
         let k = 0;
         let newPuzzle = [];
         setMobile(true)
-        for (let ind = 0; ind < 27; ind++) {
-            if (ind <= 8) {
+        for (let ind = 0; ind < textArr.length; ind++) {
+            if (ind <= 10) {
                 hei = 50;
-            } else if (ind <= 17) {
+            } else if (ind <= 21) {
                 hei = 0;
-                if (ind === 9) {
+                if (ind === 11) {
                     k = 0;
                 }
             } else {
                 hei = -50;
-                if (ind === 18) {
+                if (ind === 22) {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 250 + 55 * (k);
+            let xPos = dimensions.width / 2 - 300 + 50 * (k);
             let yPos = dimensions.height / 2 - hei*2;
             k++;
 
@@ -527,4 +527,4 @@ else{
 }
 }
 
-export default PixiGame3;
+export default PixiGame4;
