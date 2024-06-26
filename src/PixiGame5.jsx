@@ -7,7 +7,7 @@ import Confetti from 'react-confetti'
 // import ConfettiComponent from './ConfettiComponent';
 // import Confetti from 'canvas-confetti';
 
-function PixiGame4() {
+function PixiGame5() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
@@ -460,8 +460,8 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <h3>Completed Words: {StrCompletedWords}</h3>
         <br/>
         <div style={{marginLeft: window.innerWidth/4 + 100}}>
-        <a type="button" className="btn btn-secondary btn-lg" href='/game3'>Previous</a>
-            <a type="button" className="btn btn-secondary btn-lg" href='/game5' style={{marginLeft: window.innerWidth/4}}>Next</a>
+        <a type="button" className="btn btn-secondary btn-lg" href='/game4'>Previous</a>
+            <a type="button" className="btn btn-secondary btn-lg" href='/game6' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
             <br/>
             <br/>
@@ -514,8 +514,8 @@ else{
             <h1>Given Words: {givenWords}</h1>
             <h3>Completed Words: {StrCompletedWords}</h3>
             <div style={{marginLeft: window.innerWidth/4}}>
-        <a type="button" className="btn btn-secondary" href='/game3'>Previous</a>
-            <a type="button" className="btn btn-secondary" href='/game5' style={{marginLeft: window.innerWidth/4}}>Next</a>
+        <a type="button" className="btn btn-secondary" href='/game4'>Previous</a>
+            <a type="button" className="btn btn-secondary" href='/game6' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
 
             {/* <h3>Time: {elapsedSeconds}</h3>
@@ -527,4 +527,4 @@ else{
 }
 }
 
-export default PixiGame4;
+export default PixiGame5;
