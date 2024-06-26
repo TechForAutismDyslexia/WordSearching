@@ -327,6 +327,9 @@ function PixiGame5() {
         };
 
         const handlePointerUp = () => {
+            for(let i=0;i<indices.length;i++){
+                puzzle[indices[i]].selected = false
+            }
             if(drawing){
                 setTries(prev=>prev+1)
             }
