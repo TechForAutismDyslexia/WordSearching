@@ -191,7 +191,7 @@ function PixiGame4() {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 300 + 50 * (k);
+            let xPos = dimensions.width / 2 - 250 + 50 * (k);
             let yPos = dimensions.height / 2 - hei*2;
             k++;
 
@@ -478,7 +478,7 @@ else{
     return (
         <>
         {isCompleted && <Confetti/>}
-        <div className="App1">
+        <div className="App11" style={{padding: 0, margin: 0}}>
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
