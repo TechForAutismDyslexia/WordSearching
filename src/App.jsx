@@ -8,6 +8,7 @@ import PixiGame2 from './PixiGame2'
 import { BrowserRouter as Path, Route, Routes } from 'react-router-dom'
 import PixiGame4 from './PixiGame4'
 import PixiGame5 from'./PixiGame5'
+import PixiGame6 from './PixiGame6'
 function App() {
 
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route exact path='/game3' element = {<PixiGame3/>}/>
         <Route exact path='/game4' element = {<PixiGame4/>}/>
         <Route exact path='/game5' element = {<PixiGame5/>}/>
+        <Route exact path='/game6' element = {<PixiGame6/>}/>
         {/* <Route exact path='/game4' element={<PixiComponent4/>}/> */}
       </Routes>
     </Path>
