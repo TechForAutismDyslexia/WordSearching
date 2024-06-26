@@ -142,17 +142,23 @@ function PixiGame7() {
         let hei;
         let newPuzzle = [];
         for (let ind = 0; ind < textArr.length; ind++) {
-            if (ind <= 10) {
+            if (ind <= 15) {
                 hei = 150;
-            } else if (ind <= 21) {
-                hei = 50;
-                if (ind === 11) {
+            } else if (ind <= 31) {
+                hei = 75;
+                if (ind === 16) {
                     k = 0;
                 }
-            } else {
-                hei = -50;
-                if (ind === 22) {
+            } else if(ind<=47){
+                hei = 0;
+                if (ind === 32) {
                     k = 0;
+                }
+            }
+            else{
+                hei = -75;
+                if(ind ===48){
+                    k=0;
                 }
             }
             let xPos = dimensions.width / 2 - 400 + 50 * (k);
@@ -178,21 +184,27 @@ function PixiGame7() {
         let newPuzzle = [];
         setMobile(true)
         for (let ind = 0; ind < textArr.length; ind++) {
-            if (ind <= 10) {
-                hei = 50;
-            } else if (ind <= 21) {
-                hei = 0;
-                if (ind === 11) {
+            if (ind <= 15) {
+                hei = 150;
+            } else if (ind <= 31) {
+                hei = 75;
+                if (ind === 16) {
                     k = 0;
                 }
-            } else {
-                hei = -50;
-                if (ind === 22) {
+            } else if(ind<=47){
+                hei = 0;
+                if (ind === 32) {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 300 + 50 * (k);
-            let yPos = dimensions.height / 2 - hei*2;
+            else{
+                hei = -75;
+                if(ind ===48){
+                    k=0;
+                }
+            }
+            let xPos = dimensions.width / 2 - 400 + 50 * (k);
+            let yPos = dimensions.height / 2 - hei;
             k++;
 
             newPuzzle.push({
