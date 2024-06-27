@@ -502,7 +502,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <br/>
         <div style={{marginLeft: window.innerWidth/4 + 100}}>
         <a type="button" className="btn btn-secondary btn-lg" href='/game9'>Previous</a>
-            <a type="button" className="btn btn-secondary btn-lg" href='/game10' style={{marginLeft: window.innerWidth/4}}>Next</a>
+            <a type="button" className="btn btn-secondary btn-lg" href='/Completed' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
             <br/>
             <br/>
@@ -556,7 +556,7 @@ else{
             <h3>Completed Words: {StrCompletedWords}</h3>
             <div style={{marginLeft: window.innerWidth/4}}>
         <a type="button" className="btn btn-secondary" href='/game9'>Previous</a>
-            <a type="button" className="btn btn-secondary" href='/game10' style={{marginLeft: window.innerWidth/4}}>Next</a>
+            <a type="button" className="btn btn-secondary" href='/Completed' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
 
             {/* <h3>Time: {elapsedSeconds}</h3>

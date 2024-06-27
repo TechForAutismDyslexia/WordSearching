@@ -13,6 +13,7 @@ import PixiGame7 from './PixiGame7'
 import PixiGame8 from './PixiGame8'
 import PixiGame9 from './PixiGame9'
 import PixiGame10 from './PixiGame10'
+import Completed from './Completed'
 function App() {
 
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route exact path='/game8' element = {<PixiGame8/>}/>
         <Route exact path='/game9' element = {<PixiGame9/>}/>
         <Route exact path='/game10' element = {<PixiGame10/>}/>
+        <Route exact path='/Completed' element={<Completed/>}/>
         {/* <Route exact path='/game4' element={<PixiComponent4/>}/> */}
       </Routes>
     </Path>
