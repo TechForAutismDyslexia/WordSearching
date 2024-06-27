@@ -219,7 +219,7 @@ function PixiComponent2() {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 250 + 55 * (k);
+            let xPos = dimensions.width / 2 - 300 + 65 * (k);
             let yPos = dimensions.height / 2 - hei*2;
             k++;
 
@@ -511,6 +511,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
 else{
     return (
         <>
+         {isCompleted && <Confetti/>}
         <div className="A" style={{padding: 0}}>
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>

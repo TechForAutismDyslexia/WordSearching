@@ -506,6 +506,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
 else{
     return (
         <>
+         {isCompleted && <Confetti/>}
         <div className="A">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
