@@ -507,7 +507,7 @@ else{
     return (
         <>
         {isCompleted && <Confetti/>}
-        <div className="App11" style={{padding: 0, margin: 0}}>
+        <div className="A">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
