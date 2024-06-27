@@ -219,7 +219,7 @@ function PixiComponent2() {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 300 + 65 * (k);
+            let xPos = dimensions.width / 2 - 300 + 70 * (k);
             let yPos = dimensions.height / 2 - hei*2;
             k++;
 
