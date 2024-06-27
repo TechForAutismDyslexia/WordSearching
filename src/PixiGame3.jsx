@@ -544,7 +544,7 @@ else{
             <h3>Completed Words: {StrCompletedWords}</h3>
             <div style={{marginLeft: window.innerWidth/4}}>
         <a type="button" className="btn btn-secondary" href='/game2'>Previous</a>
-            <a type="button" className="btn btn-secondary" href='/game4' style={{marginLeft: window.innerWidth/4}}>Next</a>
+            <a type="button" className="btn btn-secondary" href='/game5' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
 
             {/* <h3>Time: {elapsedSeconds}</h3>
