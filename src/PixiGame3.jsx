@@ -27,6 +27,8 @@ function PixiGame3() {
     // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
+    const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
+
 
     const handleOrientationChange = useCallback(() => {
         const stageElement = document.querySelector('.stage');
@@ -427,6 +429,20 @@ function PixiGame3() {
             setIsCompleted(true)
     }},[completedWords, completedWord])
 
+    useEffect(() => {
+        let interval = null;
+    
+        if (startTime && !endTime) {
+            interval = setInterval(() => {
+                setOngoingElapsedTime((new Date() - startTime) / 1000); // elapsed time in seconds
+            }, 1000);
+        } else if (endTime) {
+            clearInterval(interval);
+        }
+    
+        return () => clearInterval(interval);
+    }, [startTime, endTime]);
+
 
 if(window.innerHeight > 630 && window.innerWidth > 830){
     toggleScroll(true)
@@ -439,8 +455,9 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
-        <h4 style={{marginLeft: window.innerWidth/2 + 100}}>Tries: {tries}</h4></span>
+        {<h4 style={{marginLeft: window.innerWidth/2 + 80}}>Time: {ongoingElapsedTime.toFixed(0)}</h4>}</span>
       </div>
+        {<div style={{marginLeft: window.innerWidth - 150}}><h4>Tries: {tries}</h4> </div>}
     </div>
 
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>

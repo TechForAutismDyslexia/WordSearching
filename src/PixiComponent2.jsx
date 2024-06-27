@@ -25,7 +25,7 @@ function PixiComponent2() {
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
-    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [isStarted, setisStarted] = useState(false);
@@ -459,9 +459,10 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
     {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
-        <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div> {isStarted && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', direction: 'rtl'}}><h3>Time: {ongoingElapsedTime.toFixed(0)}</h3> </div>}
-        <h4 style={{marginLeft: window.innerWidth/2 + 100}}>Tries: {tries}</h4></span>
+        <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
+        {<h4 style={{marginLeft: window.innerWidth/2 + 80}}>Time: {ongoingElapsedTime.toFixed(0)}</h4>}</span>
       </div>
+        {<div style={{marginLeft: window.innerWidth - 150}}><h4>Tries: {tries}</h4> </div>}
     </div>
 
         <Stage x={0} y={0} options={{ backgroundColor: 11505519 }} height={dimensions.height - 250} width={dimensions.width}>
