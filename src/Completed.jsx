@@ -3,7 +3,7 @@ import './Completed.css';
 import Confetti from 'react-confetti';
 
 function Completed(){
-  document.body.style.overflow = "hidden"
+  document.body.style = "overflow: hidden; background-color: #af8f6f;font-family: Arial, sans-serif; display: flex;justify-content: center;align-items: center;height: 100vh;margin: 0;"
     return(
       <>
       <Confetti/>
