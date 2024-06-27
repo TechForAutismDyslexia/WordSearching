@@ -240,6 +240,13 @@ function PixiGame10() {
                 if(window.innerHeight > 630 && window.innerWidth > 830){
                 pointerPosition_x = e.clientX + window.scrollX;
                 pointerPosition_y = e.clientY + window.scrollY;
+                }
+                else{
+                pointerPosition_x = e.clientX;
+                pointerPosition_y = e.clientY;
+                }
+                let color = word.color;
+                // console.log("CCColor: "+color)
                 const letterPosition = { x: word.xPos, y: word.yPos };
                 const distance = Math.sqrt(
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
@@ -257,47 +264,6 @@ function PixiGame10() {
                 }
                     // word.initColor = 'green'
                 }
-                }
-                else{
-                pointerPosition_x = e.clientX;
-                pointerPosition_y = e.clientY;
-                const letterPosition = { x: word.xPos, y: word.yPos };
-                const distance = Math.sqrt(
-                    Math.pow(pointerPosition_x - letterPosition.x, 2) +
-                    Math.pow(pointerPosition_y - letterPosition.y, 2)
-                )
-                if(distance< 20 && word.selected === false){
-                    console.log(word.text)
-                    setSelectedWord(prev => prev + word.text)
-                    setIndices([...indices, word.index])
-                    word.selected = true
-                    if(indices.length >= 2){
-                    setLines((line)=>[
-                        ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos, clear: "none"}
-                    ])
-                }
-                    // word.initColor = 'green'
-                }
-                }
-                // let color = word.color;
-                // console.log("CCColor: "+color)
-                // const letterPosition = { x: word.xPos, y: word.yPos };
-                // const distance = Math.sqrt(
-                //     Math.pow(pointerPosition_x - letterPosition.x, 2) +
-                //     Math.pow(pointerPosition_y - letterPosition.y, 2)
-                // )
-                // if(distance< 40 && word.selected === false){
-                //     console.log(word.text)
-                //     setSelectedWord(prev => prev + word.text)
-                //     setIndices([...indices, word.index])
-                //     word.selected = true
-                //     if(indices.length >= 2){
-                //     setLines((line)=>[
-                //         ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos, clear: "none"}
-                //     ])
-                // }
-                //     // word.initColor = 'green'
-                // }
                 return {
                     ...word,
                     color: distance <= 40 ? 'green':color,
@@ -364,7 +330,7 @@ function PixiGame10() {
                             color:'green'
                         };
             }
-                else if(distance < 15 && mobile){
+                else if(distance <40 && mobile){
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
@@ -553,7 +519,7 @@ else{
     return (
         <>
         {isCompleted && <Confetti/>}
-        <div className="App1">
+        <div className="A">
       <div className="image-container">
         <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
