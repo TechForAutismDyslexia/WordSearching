@@ -41,6 +41,14 @@ function PixiGame10() {
             window.removeEventListener("orientationchange", handleOrientationChange);
         };
     }, [handleOrientationChange]);
+
+    const toggleScroll = (disable) => {
+        if (disable) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    };
     
     
     function readOutLoud(text){
@@ -433,6 +441,7 @@ function PixiGame10() {
 
 
 if(window.innerHeight > 630 && window.innerWidth > 830){
+    toggleScroll(true)
     return (
     <>
     {isCompleted && <Confetti/>}

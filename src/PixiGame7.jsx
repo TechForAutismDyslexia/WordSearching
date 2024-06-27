@@ -431,8 +431,17 @@ function PixiGame7() {
             setIsCompleted(true)
     }},[completedWords, completedWord])
 
+    const toggleScroll = (disable) => {
+        if (disable) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    };
+
 
 if(window.innerHeight > 630 && window.innerWidth > 830){
+    toggleScroll(true)
     return (
     <>
     {isCompleted && <Confetti/>}
