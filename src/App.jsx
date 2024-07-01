@@ -19,18 +19,18 @@ function App() {
   return (
     <Path>
       <Routes>
-        <Route exact path='/' element = {<Home/>}/>
-        <Route exact path='/game1' element = {<PixiComponent2/>}/>
-        <Route exact path='/game2' element = {<PixiGame2/>}/>
-        <Route exact path='/game3' element = {<PixiGame3/>}/>
-        <Route exact path='/game4' element = {<PixiGame4/>}/>
-        <Route exact path='/game5' element = {<PixiGame5/>}/>
-        <Route exact path='/game6' element = {<PixiGame6/>}/>
-        <Route exact path='/game7' element = {<PixiGame7/>}/>
-        <Route exact path='/game8' element = {<PixiGame8/>}/>
-        <Route exact path='/game9' element = {<PixiGame9/>}/>
-        <Route exact path='/game10' element = {<PixiGame10/>}/>
-        <Route exact path='/Completed' element={<Completed/>}/>
+        <Route exact path='/wordmatching' element = {<Home/>}/>
+        <Route exact path='/wordmatching/game1' element = {<PixiComponent2/>}/>
+        <Route exact path='/wordmatching/game2' element = {<PixiGame2/>}/>
+        <Route exact path='/wordmatching/game3' element = {<PixiGame3/>}/>
+        <Route exact path='/wordmatching/game4' element = {<PixiGame4/>}/>
+        <Route exact path='/wordmatching/game5' element = {<PixiGame5/>}/>
+        <Route exact path='/wordmatching/game6' element = {<PixiGame6/>}/>
+        <Route exact path='/wordmatching/game7' element = {<PixiGame7/>}/>
+        <Route exact path='/wordmatching/game8' element = {<PixiGame8/>}/>
+        <Route exact path='/wordmatching/game9' element = {<PixiGame9/>}/>
+        <Route exact path='/wordmatching/game10' element = {<PixiGame10/>}/>
+        <Route exact path='/wordmatching/Completed' element={<Completed/>}/>
         {/* <Route exact path='/game4' element={<PixiComponent4/>}/> */}
       </Routes>
     </Path>
