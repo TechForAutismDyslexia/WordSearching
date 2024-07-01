@@ -448,6 +448,36 @@ function PixiComponent2() {
             setIsCompleted(true)
     }},[completedWords, completedWord])
 
+    useEffect(() => {
+        if (completedTime !== null) {
+            alert(`Congratulations! You completed the game in ${completedTime / 1000} seconds.`);
+            
+            // Send game data to the backend
+            const gameData = {
+                gameId: 88,
+                tries: tries,
+                timer: completedTime/1000,
+                status: true
+            };
+            
+            fetch('https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(gameData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    }, [completedTime, tries]);
+    
+
 
 if(window.innerHeight > 630 && window.innerWidth > 830){
     toggleScroll(true)
