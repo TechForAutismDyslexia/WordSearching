@@ -1,12 +1,12 @@
 /* General Styles */
 body {
-  background-color: #AF8F6F;
+  background-color:#B1AFCF;
   font-family: Arial, sans-serif;
 }
 
 /* App Styles */
 .App, .App1, .App11 {
-  background-color: #af8f6f;
+  background-color: #B1AFCF;
   display: flex;
   justify-content: center;
   align-items: center;
