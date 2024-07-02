@@ -4,6 +4,7 @@ import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
+import words from './words.json'
 // import ConfettiComponent from './ConfettiComponent';
 // import Confetti from 'canvas-confetti';
 
@@ -11,7 +12,7 @@ function PixiComponent2() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>["one", "eat", "tie", "ear"], []);
+    let completedWord = useMemo(()=>words[1].words, []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -28,6 +29,8 @@ function PixiComponent2() {
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
+    const textArr = useMemo(()=>words[1].grid, []);
+    let hei;
 
 
     useEffect(() => {
@@ -163,7 +166,6 @@ function PixiComponent2() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-            const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];        let hei;
         let k = 0;
         let newPuzzle = [];
         for (let ind = 0; ind < 27; ind++) {
@@ -197,7 +199,6 @@ function PixiComponent2() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr = ["a", "x", "e", "p", "n", "d", "e", "j", "n", "a", "n", "q", "a", "o", "i", "b", "a", "l", "o", "d", "r", "u", "t", "c", "h", "g", "r"];        let hei;
         let k = 0;
         let newPuzzle = [];
         setMobile(true)
@@ -453,14 +454,14 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
             <div className="App">
     {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
       <div className="image-container">
-        <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
+        <img src='../info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
         {<h4 style={{marginLeft: window.innerWidth/2 + 80}}>Time: {ongoingElapsedTime.toFixed(0)}</h4>}</span>
       </div>
         {<div style={{marginLeft: window.innerWidth - 150}}><h4>Tries: {tries}</h4> </div>}
     </div>
 
-        <Stage x={0} y={0} options={{ backgroundColor: "#B1AFCF"}} height={dimensions.height - 250} width={dimensions.width}>
+        <Stage x={0} y={0} options={{ backgroundColor: 11644879}} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
 
             <Container name='textArea'>
@@ -509,13 +510,13 @@ else{
          {isCompleted && <Confetti/>}
          <div className="A">
       <div className="image-container">
-        <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
+        <img src='../info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
         <h5 style={{marginLeft: window.innerWidth/15, padding: 0, width: 100}}>Time: {ongoingElapsedTime.toFixed(0)}</h5><h4 style={{marginLeft: window.innerWidth/12, padding: 0, width: 100}}>Tries: {tries}</h4></span>
       </div>
     </div>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
-            <Stage x={0} y={0} options={{ backgroundColor: "#B1AFCF"}} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
+            <Stage x={0} y={0} options={{ backgroundColor: 11644879}} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
     
                 <Container name='textArea'>

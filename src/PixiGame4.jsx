@@ -4,6 +4,7 @@ import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
+import words from './words.json'
 // import ConfettiComponent from './ConfettiComponent';
 // import Confetti from 'canvas-confetti';
 
@@ -11,7 +12,7 @@ function PixiGame4() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>['map','pot','tap','pet','tip','pat','top','put','ten','nor','run'], []);
+    let completedWord = useMemo(()=>words[6].words, []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -28,6 +29,9 @@ function PixiGame4() {
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
+    const textArr = useMemo(()=>words[6].grid,[]);
+    let hei;
+
 
 
     const handleOrientationChange = useCallback(() => {
@@ -147,8 +151,6 @@ function PixiGame4() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr =  ['m','f','t','s','t','v','t','k','t','a','r','a','o','a','e','i','a','o','u','e','o','u','p','k','p','b','p','r','p','w','n','c','n'];
-        let hei;
         let k = 0;
         let newPuzzle = [];
         for (let ind = 0; ind < textArr.length; ind++) {
@@ -182,8 +184,6 @@ function PixiGame4() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr =  ['m','f','t','s','t','v','t','k','t','a','r','a','o','a','e','i','a','o','u','e','o','u','p','k','p','b','p','r','p','w','n','c','n'];
-        let hei;
         let k = 0;
         let newPuzzle = [];
         setMobile(true)
@@ -460,7 +460,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         {<div style={{marginLeft: window.innerWidth - 150}}><h4>Tries: {tries}</h4> </div>}
     </div>
 
-        <Stage x={0} y={0} options={{ backgroundColor: "#B1AFCF" }} height={dimensions.height - 250} width={dimensions.width}>
+        <Stage x={0} y={0} options={{ backgroundColor: 11644879 }} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
 
             <Container name='textArea'>
@@ -515,7 +515,7 @@ else{
       </div>
     </div>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
-            <Stage x={0} y={0} options={{ backgroundColor: "#B1AFCF" }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
+            <Stage x={0} y={0} options={{ backgroundColor: 11644879 }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
     
                 <Container name='textArea'>

@@ -6,12 +6,13 @@ import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
 // import ConfettiComponent from './ConfettiComponent';
 // import Confetti from 'canvas-confetti';
+import words from './words.json'
 
 function PixiComponent2() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>["ant", "tan", "nib", "bat"], []);
+    let completedWord = useMemo(()=>words[0].words, []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -29,6 +30,8 @@ function PixiComponent2() {
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [isStarted, setisStarted] = useState(false);
+
+    const textArr = useMemo(()=>words[0].grid, []);
 
 
     const handleOrientationChange = useCallback(() => {
@@ -165,8 +168,8 @@ function PixiComponent2() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr = ["a", "x", "a", "x", "n", "u", "v", "u", "t","r", "n", "m", "a", "l", "i", "o", "a", "o","x", "l", "t", "d", "p", "q", "b", "r", "w"];
-        let hei;
+            // const textArr = words[0].grid;
+            let hei;
         let k = 0;
         let newPuzzle = [];
         for (let ind = 0; ind < 27; ind++) {
@@ -200,7 +203,7 @@ function PixiComponent2() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr = ["a", "x", "a", "x", "n", "u", "v", "u", "t","r", "n", "m", "a", "l", "i", "o", "a", "o","x", "l", "t", "d", "p", "q", "b", "r", "w"];
+        // const textArr = ["a", "x", "a", "x", "n", "u", "v", "u", "t","r", "n", "m", "a", "l", "i", "o", "a", "o","x", "l", "t", "d", "p", "q", "b", "r", "w"];
         let hei;
         let k = 0;
         let newPuzzle = [];
@@ -449,14 +452,14 @@ function PixiComponent2() {
     }},[completedWords, completedWord])
 
     useEffect(() => {
-        if (completedTime !== null) {
-            alert(`Congratulations! You completed the game in ${completedTime / 1000} seconds.`);
+        if (isCompleted) {
+            // alert(`Congratulations! You completed the game in ${completedTime / 1000} seconds.`);
             
             // Send game data to the backend
-            const gameData = {
+            const game = {
                 gameId: 88,
                 tries: tries,
-                timer: completedTime/1000,
+                timer: 1000,
                 status: true
             };
             
@@ -465,7 +468,7 @@ function PixiComponent2() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(gameData)
+                body: JSON.stringify(game)
             })
             .then(response => response.json())
             .then(data => {
@@ -488,14 +491,14 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
             <div className="App">
     {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
       <div className="image-container">
-        <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
+        <img src='../info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
         {<h4 style={{marginLeft: window.innerWidth/2 + 80}}>Time: {ongoingElapsedTime.toFixed(0)}</h4>}</span>
       </div>
         {<div style={{marginLeft: window.innerWidth - 150}}><h4>Tries: {tries}</h4> </div>}
     </div>
 
-        <Stage x={0} y={0} options={{ backgroundColor: "#B1AFCF" }} height={dimensions.height - 250} width={dimensions.width}>
+        <Stage x={0} y={0} options={{ backgroundColor: 11644879 }} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
 
             <Container name='textArea'>
@@ -544,7 +547,7 @@ else{
         {isCompleted && <Confetti/>}
         <div className="A">
       <div className="image-container">
-        <img src='./info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
+        <img src='../info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
         <h5 style={{marginLeft: window.innerWidth/15, padding: 0, width: 100}}>Time: {ongoingElapsedTime.toFixed(0)}</h5><h4 style={{marginLeft: window.innerWidth/12, padding: 0, width: 100}}>Tries: {tries}</h4></span>
       </div>

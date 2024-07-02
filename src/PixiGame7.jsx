@@ -4,6 +4,7 @@ import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
+import words from './words.json'
 // import ConfettiComponent from './ConfettiComponent';
 // import Confetti from 'canvas-confetti';
 
@@ -11,7 +12,7 @@ function PixiGame7() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>['went','tent','trip','pond','desk'], []);
+    let completedWord = useMemo(()=>words[2].words, []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -28,6 +29,8 @@ function PixiGame7() {
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
+    const textArr = useMemo(()=>words[2].grid,[]);
+    let hei;
 
 
     const handleOrientationChange = useCallback(() => {
@@ -139,9 +142,7 @@ function PixiGame7() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-        const textArr = ['a','c','b','t','e','k','r','i','s','p','a','o','l','u','a','k','d','f','n','c','e','s','r','u','i','c','o','w','x','u','s','r','g','e','q','j','f','n','x','r','c','b','r','n','o','e','q','l','w','u','r','k','b','r','t','k','k','z','y','o','d','l','a','n'];
         let k = 0;
-        let hei;
         let newPuzzle = [];
         for (let ind = 0; ind < textArr.length; ind++) {
             if (ind <= 15) {
@@ -180,8 +181,6 @@ function PixiGame7() {
         setPuzzle(newPuzzle);
     }
     else{
-        const textArr =  ['a','c','b','t','e','k','r','i','s','p','a','o','l','u','a','k','d','f','n','c','e','s','r','u','i','c','o','w','x','u','s','r','g','e','q','j','f','n','x','r','c','b','r','n','o','e','q','l','w','u','r','k','b','r','t','k','k','z','y','o','d','l','a','n'];
-        let hei;
         let k = 0;
         let newPuzzle = [];
         setMobile(true)
@@ -471,7 +470,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         {<div style={{marginLeft: window.innerWidth - 150}}><h4>Tries: {tries}</h4> </div>}
     </div>
 
-        <Stage x={0} y={0} options={{ backgroundColor: "#B1AFCF"}} height={dimensions.height - 250} width={dimensions.width}>
+        <Stage x={0} y={0} options={{ backgroundColor: 11644879}} height={dimensions.height - 250} width={dimensions.width}>
         <Graphics draw={draw} /> 
 
             <Container name='textArea'>
@@ -526,7 +525,7 @@ else{
       </div>
     </div>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
-            <Stage x={0} y={0} options={{ backgroundColor: "#B1AFCF"}} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
+            <Stage x={0} y={0} options={{ backgroundColor: 11644879}} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
     
                 <Container name='textArea'>
