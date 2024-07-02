@@ -7,7 +7,6 @@ import Confetti from 'react-confetti'
 // import ConfettiComponent from './ConfettiComponent';
 // import Confetti from 'canvas-confetti';
 import words from './words.json'
-
 function PixiComponent2() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
@@ -453,32 +452,40 @@ function PixiComponent2() {
 
     useEffect(() => {
         if (isCompleted) {
-            // alert(`Congratulations! You completed the game in ${completedTime / 1000} seconds.`);
-            
-            // Send game data to the backend
-            const game = {
-                gameId: 88,
+            const gameData = {
+                gameId: "1",
                 tries: tries,
                 timer: 1000,
                 status: true
             };
-            
-            fetch('https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(game)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+    
+            try {
+                fetch('https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(gameData) // Ensure gameData is properly stringified
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to send game data');
+                    }
+                    return response.json(); // Parse the response JSON
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error while saving the data...:', error);
+                });
+            } catch (error) {
+                console.error('Error while preparing game data:', error);
+            }
         }
-    }, [completedTime, tries]);
+    }, [isCompleted, tries, completedTime]);
+    
+    
     
 
 
