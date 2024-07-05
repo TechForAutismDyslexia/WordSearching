@@ -495,7 +495,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <br/>
         <div style={{marginLeft: window.innerWidth/4 + 100}}>
         <a type="button" className="btn btn-secondary btn-lg" href='/word-matching/game9'>Previous</a>
-            <a type="button" className="btn btn-secondary btn-lg" href='/Completed' style={{marginLeft: window.innerWidth/4}}>Next</a>
+            <a type="button" className="btn btn-secondary btn-lg" href='/word-matching/Completed' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
             <br/>
             <br/>

@@ -30,7 +30,7 @@ function App() {
         <Route exact path='/word-matching/game8' element = {<PixiGame8/>}/>
         <Route exact path='/word-matching/game9' element = {<PixiGame9/>}/>
         <Route exact path='/word-matching/game10' element = {<PixiGame10/>}/>
-        <Route exact path='/Completed' element={<Completed/>}/>
+        <Route exact path='/word-matching/Completed' element={<Completed/>}/>
         {/* <Route exact path='/word-matching/game4' element={<PixiComponent4/>}/> */}
       </Routes>
     </Path>
