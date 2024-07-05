@@ -29,6 +29,7 @@ function PixiGame5() {
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
+    const [isStarted, setisStarted] = useState(false)
     const textArr = useMemo(()=>words[7].grid,[]);
     let hei;
 
@@ -69,8 +70,9 @@ function PixiGame5() {
     }
 
     useEffect(() => {
+        if(isStarted)
         setStartTime(new Date());
-    }, []);
+    }, [isStarted]);
 
     useEffect(() => {
         if (completedWords.length === completedWord.length && startTime) {
@@ -121,7 +123,6 @@ function PixiGame5() {
         g.moveTo(puzzle[indices[indices.length - 2]].xPos, puzzle[indices[indices.length-2]].yPos);
         g.lineTo(puzzle[indices[indices.length - 1]].xPos, puzzle[indices[indices.length - 1]].yPos);
         
-        console.log("length: "+lines.length)
         g.endFill();
         }
         if(lineClear){
@@ -233,14 +234,12 @@ function PixiGame5() {
                 pointerPosition_y = e.clientY;
                 }
                 let color = word.color;
-                // console.log("CCColor: "+color)
                 const letterPosition = { x: word.xPos, y: word.yPos };
                 const distance = Math.sqrt(
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 )
                 if(distance< 40 && word.selected === false){
-                    console.log(word.text)
                     setSelectedWord(prev => prev + word.text)
                     setIndices([...indices, word.index])
                     word.selected = true
@@ -249,7 +248,6 @@ function PixiGame5() {
                         ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos, clear: "none"}
                     ])
                 }
-                    // word.initColor = 'green'
                 }
                 return {
                     ...word,
@@ -263,22 +261,18 @@ function PixiGame5() {
             const updatedPuzzle = puzzle.map((word) => {
                 const pointerPosition_x = e.clientX + window.scrollX;
                 const pointerPosition_y = e.clientY + window.scrollY;
-                // let color = word.color;
-                // console.log("CCColor: "+color)
                 const letterPosition = { x: word.xPos, y: word.yPos };
                 const distance = Math.sqrt(
                     Math.pow(pointerPosition_x - letterPosition.x, 2) +
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 )
                 if(distance< 40 && !mobile){
-                    console.log(word.text)
                 return {
                     ...word,
                     color: distance <= 40 ? 'green':word.initColor,
                 };
             }
             else{
-                console.log(word.text)
                 return {
                     ...word,
                     color: distance == 0 ? 'green':word.initColor,
@@ -306,7 +300,7 @@ function PixiGame5() {
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
                 if(distance< 40 && !mobile){
-                    console.log(word.text)
+                    setisStarted(true)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
@@ -318,7 +312,7 @@ function PixiGame5() {
                         };
             }
                 else if(distance <40 && mobile){
-                    console.log(word.text)
+                    setisStarted(true)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
@@ -343,7 +337,6 @@ function PixiGame5() {
                 setTries(prev=>prev+1)
             }
             setDrawing(false);
-            console.log(indices)
             if (!completedWord.includes(selectedWord)) {
                 // setTries(prev=>prev+1)
                 for(let l=0;l<indices.length;l++){

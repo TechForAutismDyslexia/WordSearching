@@ -29,6 +29,7 @@ function PixiComponent2() {
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [isStarted, setisStarted] = useState(false);
+    const [saved, isSaved] = useState(false);
 
     const textArr = useMemo(()=>words[0].grid, []);
 
@@ -311,7 +312,6 @@ function PixiComponent2() {
         }
         };
         const handlePointerDown = (e) => {
-            setisStarted(true)
             const updatedPuzzle = puzzle.map((word) => {
                 let pointerPosition_x, pointerPosition_y;
                 if(window.innerHeight > 630 && window.innerWidth > 830){
@@ -328,6 +328,7 @@ function PixiComponent2() {
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
                 if(distance< 40 && !mobile){
+                setisStarted(true)
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
@@ -340,6 +341,7 @@ function PixiComponent2() {
                         };
             }
                 else if(distance <40 && mobile){
+                setisStarted(true)
                     console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
@@ -451,11 +453,11 @@ function PixiComponent2() {
     }},[completedWords, completedWord])
 
     useEffect(() => {
-        if (isCompleted) {
+        if (isCompleted && !saved) {
             const gameData = {
-                gameId: "1",
+                gameId: 16,
                 tries: tries,
-                timer: 1000,
+                timer: ongoingElapsedTime.toFixed(0),
                 status: true
             };
     
@@ -471,6 +473,8 @@ function PixiComponent2() {
                     if (!response.ok) {
                         throw new Error('Failed to send game data');
                     }
+                    console.log(gameData)
+                    isSaved(true);
                     return response.json(); // Parse the response JSON
                 })
                 .then(data => {
@@ -483,7 +487,7 @@ function PixiComponent2() {
                 console.error('Error while preparing game data:', error);
             }
         }
-    }, [isCompleted, tries, completedTime]);
+    }, [isCompleted, tries, completedTime,ongoingElapsedTime,saved]);
     
     
     
