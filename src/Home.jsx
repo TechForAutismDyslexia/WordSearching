@@ -12,9 +12,14 @@ function Home() {
         <img src="word_search icon.png" alt="Search Icon"  className='image'/>
       </div>
       <h3>Welcome to the Puzzle Game</h3>
-      <Link to="/game1">
+      <span>
+      <Link to="/word-matching/game1">
         <button className="Start-button">Start</button>
       </Link>
+      <Link to="https://joywithlearning.com/games ">
+        <button className="Home-button">Home</button>
+      </Link>
+      </span>
     </div>
     </>
   );
