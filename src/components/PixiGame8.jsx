@@ -25,7 +25,7 @@ function PixiGame8() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
-    // const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
@@ -59,10 +59,7 @@ function PixiGame8() {
     
     
     function readOutLoud(text){
-        if ('speechSynthesis' in window) {
-            // Speech Synthesis supported 🎉
-           }else{
-             // Speech Synthesis Not Supported 😣
+        if (!('speechSynthesis' in window)) {
              alert("Sorry, your browser doesn't support text to speech!");
            }
             var msg = new SpeechSynthesisUtterance();
@@ -261,7 +258,7 @@ function PixiGame8() {
                         ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos, clear: "none"}
                     ])
                 }
-                    // word.initColor = 'green'
+                    
                 }
                 return {
                     ...word,
@@ -352,7 +349,7 @@ function PixiGame8() {
             }
             setDrawing(false);
             if (!completedWord.includes(selectedWord)) {
-                // setTries(prev=>prev+1)
+                
                 for(let l=0;l<indices.length;l++){
                     for(let k=0;k<puzzle.length;k++){
                     if(indices[l] === puzzle[k].index){
@@ -375,8 +372,8 @@ function PixiGame8() {
             else if(!completedWords.includes(selectedWord)){
                 setDrawing(false);
                 readOutLoud(selectedWord)
-                // setTries(prev=>prev+1)
-                // alert("Congrats!! You have found a word");
+                
+                
                 setCompletedWords([...completedWords,selectedWord+"\t\t"]);
                 setStrCompletedWords(prev => prev + selectedWord + "\t\t");
                 console.log("completed:"+completedWords[0])
@@ -402,7 +399,7 @@ function PixiGame8() {
                 }
             }
             else{
-                // setTries(prev=>prev+1)
+                
                 alert("Already found the word "+selectedWord+"!!")
                 readOutLoud(selectedWord);
                 setSelectedWord("")
@@ -430,8 +427,8 @@ function PixiGame8() {
 
     useEffect(()=>{
        if (completedWords.length === completedWord.length) {
-            // confetti();
-            // alert("Congrats!!You have finished the game.")
+            
+            
             setIsCompleted(true)
     }},[completedWords, completedWord])
 
@@ -440,7 +437,7 @@ function PixiGame8() {
     
         if (startTime && !endTime) {
             interval = setInterval(() => {
-                setOngoingElapsedTime((new Date() - startTime) / 1000); // elapsed time in seconds
+                setOngoingElapsedTime((new Date() - startTime) / 1000); 
             }, 1000);
         } else if (endTime) {
             clearInterval(interval);
@@ -455,9 +452,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
     return (
     <>
     {isCompleted && <Confetti/>}
-            {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
             <div className="App">
-    {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
       <div className="image-container">
         <img src={info_pic} alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
@@ -483,10 +478,8 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
                     interactive={true}
                 />
             ))}
-            {/* <Graphics draw={draw} />  */}
             </Container>
         </Stage>
-        {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
         
         <br/>
         <br/>
@@ -501,10 +494,6 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
             <br/>
             <br/>
             <br/>
-        {/* <h3>Time: {elapsedSeconds}</h3>
-        {completedTime && (
-                <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
-            )} */}
         </>
     );
     
@@ -520,7 +509,6 @@ else{
         <h4 style={{marginLeft: window.innerWidth/12}}>Tries: {tries}</h4></span>
       </div>
     </div>
-        {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
             <Stage x={0} y={0} options={{ backgroundColor: 11644879}} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
     
@@ -538,10 +526,8 @@ else{
                         interactive={true}
                     />
                 ))}
-                {/* <Graphics draw={draw} />  */}
                 </Container>
             </Stage>
-            {/* <canvas ref={confettiCanvasRef} className="confetti-canvas"></canvas> */}
             
             <br/>
             <br/>
@@ -553,10 +539,7 @@ else{
             <a type="button" className="btn btn-secondary" href='/' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
 
-            {/* <h3>Time: {elapsedSeconds}</h3>
-            {completedTime && (
-                    <h3>Time taken to complete: {completedTime / 1000} seconds</h3>
-                )} */}
+           
             </>
         );
 }
