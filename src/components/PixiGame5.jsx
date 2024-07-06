@@ -1,17 +1,18 @@
 import {Container, Stage, Text, Graphics } from '@pixi/react';
-import './App.css';
+import '../App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
-// import ConfettiComponent from './ConfettiComponent';
-// import Confetti from 'canvas-confetti';
-import words from './words.json'
-function PixiComponent2() {
+import words from '../assets/words.json'
+import info_pic from '../assets/images/info_pic.png'
+
+
+function PixiGame5() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>words[1].words, []);
+    let completedWord = useMemo(()=>words[7].words, []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -24,13 +25,13 @@ function PixiComponent2() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [completedTime, setCompletedTime] = useState(null);
-    const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
     // const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
-    const [isStarted, setisStarted] = useState(false);
-
-    const textArr = useMemo(()=>words[1].grid, []);
+    const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
+    const [isStarted, setisStarted] = useState(false)
+    const textArr = useMemo(()=>words[7].grid,[]);
+    let hei;
 
 
     const handleOrientationChange = useCallback(() => {
@@ -39,6 +40,7 @@ function PixiComponent2() {
             stageElement.style.display = 'block';
         }
     }, []);
+
     const toggleScroll = (disable) => {
         if (disable) {
             document.body.style.overflow = 'hidden';
@@ -68,15 +70,13 @@ function PixiComponent2() {
     }
 
     useEffect(() => {
-        if(isStarted){
-            setStartTime(new Date());
-        }
+        if(isStarted)
+        setStartTime(new Date());
     }, [isStarted]);
 
     useEffect(() => {
         if (completedWords.length === completedWord.length && startTime) {
             setEndTime(new Date());
-
         }
     }, [completedWords, completedWord, startTime]);
 
@@ -86,21 +86,6 @@ function PixiComponent2() {
             setCompletedTime(elapsed);
         }
     }, [startTime, endTime]);
-
-    useEffect(() => {
-        let interval = null;
-    
-        if (startTime && !endTime) {
-            interval = setInterval(() => {
-                setOngoingElapsedTime((new Date() - startTime) / 1000); // elapsed time in seconds
-            }, 1000);
-        } else if (endTime) {
-            clearInterval(interval);
-        }
-    
-        return () => clearInterval(interval);
-    }, [startTime, endTime]);
-    
 
     useEffect(() => {
         if (completedTime !== null) {
@@ -166,25 +151,23 @@ function PixiComponent2() {
     
     useEffect(() => {
         if(window.innerHeight > 630 && window.innerWidth > 830){
-            // const textArr = words[0].grid;
-            let hei;
         let k = 0;
         let newPuzzle = [];
-        for (let ind = 0; ind < 27; ind++) {
-            if (ind <= 8) {
+        for (let ind = 0; ind < textArr.length; ind++) {
+            if (ind <= 10) {
                 hei = 150;
-            } else if (ind <= 17) {
+            } else if (ind <= 21) {
                 hei = 50;
-                if (ind === 9) {
+                if (ind === 11) {
                     k = 0;
                 }
             } else {
                 hei = -50;
-                if (ind === 18) {
+                if (ind === 22) {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 400 + 100 * (k);
+            let xPos = dimensions.width / 2 - 400 + 90 * (k);
             let yPos = dimensions.height / 2 - hei;
             k++;
 
@@ -201,26 +184,24 @@ function PixiComponent2() {
         setPuzzle(newPuzzle);
     }
     else{
-        // const textArr = ["a", "x", "a", "x", "n", "u", "v", "u", "t","r", "n", "m", "a", "l", "i", "o", "a", "o","x", "l", "t", "d", "p", "q", "b", "r", "w"];
-        let hei;
-        let k = 0;
+       let k = 0;
         let newPuzzle = [];
         setMobile(true)
-        for (let ind = 0; ind < 27; ind++) {
-            if (ind <= 8) {
+        for (let ind = 0; ind < textArr.length; ind++) {
+            if (ind <= 10) {
                 hei = 50;
-            } else if (ind <= 17) {
+            } else if (ind <= 21) {
                 hei = 0;
-                if (ind === 9) {
+                if (ind === 11) {
                     k = 0;
                 }
             } else {
                 hei = -50;
-                if (ind === 18) {
+                if (ind === 22) {
                     k = 0;
                 }
             }
-            let xPos = dimensions.width / 2 - 300 + 70 * (k);
+            let xPos = dimensions.width / 2 - 300 + 50 * (k);
             let yPos = dimensions.height / 2 - hei*2;
             k++;
 
@@ -267,7 +248,6 @@ function PixiComponent2() {
                         ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos, clear: "none"}
                     ])
                 }
-                    // word.initColor = 'green'
                 }
                 return {
                     ...word,
@@ -320,24 +300,24 @@ function PixiComponent2() {
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 );
                 if(distance< 40 && !mobile){
+                    setisStarted(true)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
                         word.selected = true
                         setTries(tries++);
-                        setisStarted(true)
                         return {
                             ...word,
                             color:'green'
                         };
             }
                 else if(distance <40 && mobile){
+                    setisStarted(true)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
                         word.selected = true
                         setTries(tries++);
-                        setisStarted(true)
                         return {
                             ...word,
                             color:'green'
@@ -442,42 +422,18 @@ function PixiComponent2() {
     }},[completedWords, completedWord])
 
     useEffect(() => {
-        if (isCompleted) {
-            const gameData = {
-                gameId: "1",
-                tries: tries,
-                timer: 1000,
-                status: true
-            };
+        let interval = null;
     
-            try {
-                fetch('https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(gameData) // Ensure gameData is properly stringified
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to send game data');
-                    }
-                    return response.json(); // Parse the response JSON
-                })
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch(error => {
-                    console.error('Error while saving the data...:', error);
-                });
-            } catch (error) {
-                console.error('Error while preparing game data:', error);
-            }
+        if (startTime && !endTime) {
+            interval = setInterval(() => {
+                setOngoingElapsedTime((new Date() - startTime) / 1000); // elapsed time in seconds
+            }, 1000);
+        } else if (endTime) {
+            clearInterval(interval);
         }
-    }, [isCompleted, tries, completedTime]);
     
-    
-    
+        return () => clearInterval(interval);
+    }, [startTime, endTime]);
 
 
 if(window.innerHeight > 630 && window.innerWidth > 830){
@@ -489,7 +445,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
             <div className="App">
     {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
       <div className="image-container">
-        <img src='../info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
+        <img src={info_pic} alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
         {<h4 style={{marginLeft: window.innerWidth/2 + 80}}>Time: {ongoingElapsedTime.toFixed(0)}</h4>}</span>
       </div>
@@ -525,8 +481,8 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <h3>Completed Words: {StrCompletedWords}</h3>
         <br/>
         <div style={{marginLeft: window.innerWidth/4 + 100}}>
-        <a type="button" className="btn btn-secondary btn-lg" href='/word-matching/game1'>Previous</a>
-            <a type="button" className="btn btn-secondary btn-lg" href='/word-matching/game3' style={{marginLeft: window.innerWidth/4}}>Next</a>
+        <a type="button" className="btn btn-secondary btn-lg" href='/games/wordsearching/game4'>Previous</a>
+            <a type="button" className="btn btn-secondary btn-lg" href='/games/wordsearching/game6' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
             <br/>
             <br/>
@@ -545,13 +501,13 @@ else{
         {isCompleted && <Confetti/>}
         <div className="A">
       <div className="image-container">
-        <img src='../info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
+        <img src={info_pic} alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
         <h5 style={{marginLeft: window.innerWidth/15, padding: 0, width: 100}}>Time: {ongoingElapsedTime.toFixed(0)}</h5><h4 style={{marginLeft: window.innerWidth/12, padding: 0, width: 100}}>Tries: {tries}</h4></span>
       </div>
     </div>
         {/* <Voice ReadingText={"Find the words listed below  Click and drag on the letters to select them"}/> */}
-            <Stage x={0} y={0} options={{ backgroundColor:" #B1AFCF"}} height={dimensions.height} width={dimensions.width - 100} className='stage-container'>
+            <Stage x={0} y={0} options={{ backgroundColor: 11644879 }} height={dimensions.height} width={dimensions.width - 150} className='stage-container'>
             <Graphics draw={draw} /> 
     
                 <Container name='textArea'>
@@ -579,8 +535,8 @@ else{
             <h1>Given Words: {givenWords}</h1>
             <h3>Completed Words: {StrCompletedWords}</h3>
             <div style={{marginLeft: window.innerWidth/4}}>
-        <a type="button" className="btn btn-secondary" href='/word-matching/game1'>Previous</a>
-            <a type="button" className="btn btn-secondary" href='/word-matching/game3' style={{marginLeft: window.innerWidth/4}}>Next</a>
+        <a type="button" className="btn btn-secondary" href='/games/wordsearching/game3'>Previous</a>
+            <a type="button" className="btn btn-secondary" href='/games/wordsearching/game6' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
 
             {/* <h3>Time: {elapsedSeconds}</h3>
@@ -592,4 +548,4 @@ else{
 }
 }
 
-export default PixiComponent2;
+export default PixiGame5;

@@ -1,18 +1,18 @@
 import {Container, Stage, Text, Graphics } from '@pixi/react';
-import './App.css';
+import '../App.css';
 import '@pixi/events';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
-import words from './words.json'
-// import ConfettiComponent from './ConfettiComponent';
-// import Confetti from 'canvas-confetti';
+import words from '../assets/words.json'
+import info_pic from '../assets/images/info_pic.png'
 
-function PixiGame10() {
+
+function PixiGame9() {
     
     const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [puzzle, setPuzzle] = useState([]);
-    let completedWord = useMemo(()=>words[4].words, []);
+    let completedWord = useMemo(()=>words[3].words, []);
     const [selectedWord, setSelectedWord] = useState("")
     const [drawing, setDrawing] = useState(false)
     const [indices, setIndices] = useState([])
@@ -29,7 +29,7 @@ function PixiGame10() {
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
-    const textArr = useMemo(()=>words[4].grid,[]);
+    const textArr = useMemo(()=>words[3].grid,[]);
     const [isStarted, setIsStarted] = useState(false)
     let hei;
 
@@ -71,7 +71,8 @@ function PixiGame10() {
     }
 
     useEffect(() => {
-        isStarted && setStartTime(new Date());
+        if(isStarted)
+        setStartTime(new Date());
     }, [isStarted]);
 
     useEffect(() => {
@@ -260,7 +261,6 @@ function PixiGame10() {
                         ...line,{start_x: puzzle[indices[indices.length - 2]].xPos, start_y: puzzle[indices[indices.length - 2]].yPos, end_x:puzzle[indices[indices.length - 1]].xPos, end_y:puzzle[indices[indices.length - 1]].yPos, clear: "none"}
                     ])
                 }
-                    // word.initColor = 'green'
                 }
                 return {
                     ...word,
@@ -325,7 +325,7 @@ function PixiGame10() {
                         };
             }
                 else if(distance <40 && mobile){
-                    setIsStarted(true);
+                    setIsStarted(true)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
@@ -458,7 +458,7 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
             <div className="App">
     {/* {isCompleted && <ConfettiComponent isCompleted={{isCompleted}}/>} */}
       <div className="image-container">
-        <img src='../info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
+        <img src={info_pic} alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
         {<h4 style={{marginLeft: window.innerWidth/2 + 80}}>Time: {ongoingElapsedTime.toFixed(0)}</h4>}</span>
       </div>
@@ -494,8 +494,8 @@ if(window.innerHeight > 630 && window.innerWidth > 830){
         <h3>Completed Words: {StrCompletedWords}</h3>
         <br/>
         <div style={{marginLeft: window.innerWidth/4 + 100}}>
-        <a type="button" className="btn btn-secondary btn-lg" href='/word-matching/game9'>Previous</a>
-            <a type="button" className="btn btn-secondary btn-lg" href='/word-matching/Completed' style={{marginLeft: window.innerWidth/4}}>Next</a>
+        <a type="button" className="btn btn-secondary btn-lg" href='/games/wordsearching/game8'>Previous</a>
+            <a type="button" className="btn btn-secondary btn-lg" href='/games/wordsearching/game10' style={{marginLeft: window.innerWidth/4}}>Next</a>
             </div>
             <br/>
             <br/>
@@ -514,7 +514,7 @@ else{
         {isCompleted && <Confetti/>}
         <div className="A">
       <div className="image-container">
-        <img src='../info_pic.png' alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
+        <img src={info_pic} alt="Descriptive Image" className="hover-image" onClick={()=>readOutLoud("Find the words listed below  Click and drag on the letters to select them")} style={{height: 35}}/>
         <span style={{display: 'flex'}}><div className="description">Find the words listed below  Click and drag on the letters to select them.</div>
         <h4 style={{marginLeft: window.innerWidth/12}}>Tries: {tries}</h4></span>
       </div>
@@ -561,4 +561,4 @@ else{
 }
 }
 
-export default PixiGame10;
+export default PixiGame9;
