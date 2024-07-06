@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
 import words from '../assets/words.json'
-import info_pic from '../assets/images/info_pic.png'
+
 
 
 function PixiGame8() {
@@ -31,6 +31,8 @@ function PixiGame8() {
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
     const [isStarted, setisStarted] = useState(false)
     const textArr = useMemo(()=>words[9].grid,[]);
+    const [info_pic, setInfoPic] = useState(null);
+
     let hei;
 
 
@@ -41,6 +43,15 @@ function PixiGame8() {
             stageElement.style.display = 'block';
         }
     }, []);
+
+    useEffect(() => {
+        const loadImage = async () => {
+          const imageModule = await import('../assets/images/info_pic.png');
+          setInfoPic(imageModule.default);
+        };
+    
+        loadImage();
+      }, []);
 
     const toggleScroll = (disable) => {
         if (disable) {

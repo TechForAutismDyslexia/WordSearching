@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
 import words from '../assets/words.json'
-import info_pic from '../assets/images/info_pic.png'
+
 
 
 function PixiGame7() {
@@ -31,6 +31,8 @@ function PixiGame7() {
     const [ongoingElapsedTime, setOngoingElapsedTime] = useState(0);
     const [isStarted, setisStarted] = useState(false)
     const textArr = useMemo(()=>words[2].grid,[]);
+    const [info_pic, setInfoPic] = useState(null);
+
     let hei;
 
 
@@ -40,6 +42,15 @@ function PixiGame7() {
             stageElement.style.display = 'block';
         }
     }, []);
+
+    useEffect(() => {
+        const loadImage = async () => {
+          const imageModule = await import('../assets/images/info_pic.png');
+          setInfoPic(imageModule.default);
+        };
+    
+        loadImage();
+      }, []);
 
     useEffect(() => {
         window.addEventListener("orientationchange", handleOrientationChange);

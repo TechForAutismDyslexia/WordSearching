@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextStyle } from 'pixi.js';
 import Confetti from 'react-confetti'
 import words from '../assets/words.json'
-import info_pic from '../assets/images/info_pic.png'
 
 function PixiGame1() {
     
@@ -31,6 +30,8 @@ function PixiGame1() {
     const [isStarted, setisStarted] = useState(false);
 
     const textArr = useMemo(()=>words[1].grid, []);
+    const [info_pic, setInfoPic] = useState(null);
+
 
 
     const handleOrientationChange = useCallback(() => {
@@ -39,6 +40,16 @@ function PixiGame1() {
             stageElement.style.display = 'block';
         }
     }, []);
+
+    useEffect(() => {
+        const loadImage = async () => {
+          const imageModule = await import('../assets/images/info_pic.png');
+          setInfoPic(imageModule.default);
+        };
+    
+        loadImage();
+      }, []);
+      
     const toggleScroll = (disable) => {
         if (disable) {
             document.body.style.overflow = 'hidden';
