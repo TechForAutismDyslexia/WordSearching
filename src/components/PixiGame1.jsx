@@ -28,7 +28,7 @@ function PixiGame1() {
     const [mobile, setMobile] = useState(false)
     const [isCompleted, setIsCompleted] = useState(false)
     const [isStarted, setisStarted] = useState(false);
-    const textArr = useMemo(()=>words[0].grid, [] );
+    const textArr = useMemo(()=>words[0].grid, []);
 
 
     const handleOrientationChange = useCallback(() => {
