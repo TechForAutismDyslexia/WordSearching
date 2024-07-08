@@ -262,7 +262,6 @@ function PixiGame1() {
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 )
                 if(distance< 40 && word.selected === false){
-                    console.log(word.text)
                     setSelectedWord(prev => prev + word.text)
                     setIndices([...indices, word.index])
                     word.selected = true
@@ -292,14 +291,12 @@ function PixiGame1() {
                     Math.pow(pointerPosition_y - letterPosition.y, 2)
                 )
                 if(distance< 40 && !mobile){
-                    console.log(word.text)
                 return {
                     ...word,
                     color: distance <= 40 ? 'green':word.initColor,
                 };
             }
             else{
-                console.log(word.text)
                 return {
                     ...word,
                     color: distance == 0 ? 'green':word.initColor,
@@ -328,7 +325,6 @@ function PixiGame1() {
                 );
                 if(distance< 40 && !mobile){
                 setisStarted(true)
-                    console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
@@ -341,7 +337,6 @@ function PixiGame1() {
             }
                 else if(distance <40 && mobile){
                 setisStarted(true)
-                    console.log(word.text)
                     setDrawing(true)
                         setSelectedWord(prev => prev + word.text)
                         setIndices([...indices, word.index])
@@ -359,6 +354,7 @@ function PixiGame1() {
         };
 
         const handlePointerUp = () => {
+            console.log("Completed words: "+completedWords.length)
             for(let i=0;i<indices.length;i++){
                 puzzle[indices[i]].selected = false
             }
@@ -366,7 +362,12 @@ function PixiGame1() {
                 setTries(prev=>prev+1)
             }
             setDrawing(false);
-            console.log(indices)
+            for(let i=0;i<completedWords.length;i++){if(completedWords[i] == selectedWord){
+                alert("Already found the word "+selectedWord+"!!")
+                readOutLoud(selectedWord);
+                setSelectedWord("")
+            }
+            }
             if (!completedWord.includes(selectedWord)) {
                 for(let l=0;l<indices.length;l++){
                     for(let k=0;k<puzzle.length;k++){
@@ -390,7 +391,8 @@ function PixiGame1() {
             else if(!completedWords.includes(selectedWord)){
                 setDrawing(false);
                 readOutLoud(selectedWord)
-                setCompletedWords([...completedWords,selectedWord+"\t\t"]);
+                setCompletedWords([...completedWords,selectedWord]);
+                console.log(setCompletedWords[1])
                 setStrCompletedWords(prev => prev + selectedWord + "\t\t");
                 console.log("completed:"+completedWords[0])
                 if(indices.length >= 2){
@@ -413,11 +415,6 @@ function PixiGame1() {
                     }
                 }
                 }
-            }
-            else{
-                alert("Already found the word "+selectedWord+"!!")
-                readOutLoud(selectedWord);
-                setSelectedWord("")
             }
         };
 
